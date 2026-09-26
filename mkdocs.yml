@@ -1,0 +1,83 @@
+site_name: AWS SAP-C02 — Decision Trees
+site_description: Study notes for the AWS Certified Solutions Architect – Professional exam, organized around the decisions the exam tests.
+site_url: https://damienjacinto.github.io/aws-sap-c02/
+repo_url: https://github.com/damienjacinto/aws-sap-c02
+repo_name: damienjacinto/aws-sap-c02
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - content.action.edit
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+  - Curriculum: curriculum.md
+  - Decisions:
+      - decisions/index.md
+      - Identity & access:
+          - Will this request be allowed?: decisions/identity/policy-evaluation.md
+          - Cross-account access: decisions/identity/cross-account-access.md
+  - Exam toolkit:
+      - Keywords → answers: keywords.md
+      - Mistakes log: mistakes.md
+      - Tags: tags.md
