@@ -26,16 +26,6 @@ Day-by-day plan from **Sun 27 Sep** to the **first exam attempt on Sun 1 Nov 202
 
 Total scheduled video: **~55h raw → ~47h at the speeds above** (M fully, N ~75 %, D ~15 %).
 
-## Daily rhythm
-
-| Block | Time | What |
-|---|---|---|
-| 🌅 Morning | 3h | Lectures listed for the day, then the day's decision trees + reading |
-| 🛠️ Afternoon | 3h | Lab — subject and tasks below; you build it your way. Tear down the same day |
-| 🌙 Evening | 2h | Practice questions; every miss goes into `mistakes.md` with the tree it updates |
-
-Saturdays are consolidation days: no new content.
-
 ## Weekly overview
 
 | Week | Dates | Theme | Video (eff.) |
@@ -44,7 +34,6 @@ Saturdays are consolidation days: no new content.
 | 2 | 4 – 10 Oct | DNS, network & data protection, detective controls, governance | 10.5h |
 | 3 | 11 – 17 Oct | Compute, load balancing, containers, storage, databases, edge, DR | 13.7h |
 | 4 | 18 – 24 Oct | Integration, data, deployment, operations, migration, cost | 11.4h |
-
 
 ---
 
@@ -346,7 +335,6 @@ Saturdays are consolidation days: no new content.
 Re-read this week's trees, redo every mistake logged this week, finish any lab left open, verify no resources are left running (Cost Explorer / Tag Editor).
 
 **🌙 Evening:** Flashcards + mistakes review
-
 
 ---
 
@@ -654,7 +642,6 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 **Diagnostic: TD Timed Set 1 (75 questions, 180 min) in the morning.** Afternoon: go through every explanation (right and wrong) and log each miss in mistakes.md with the tree it belongs to. A low score is expected — this measures the gap, not you.
 
 **🌙 Evening:** Finish the Timed Set 1 review
-
 
 ---
 
@@ -1001,7 +988,6 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 
 **🌙 Evening:** Review [N] Practice Test 1
 
-
 ---
 
 ## Week 4 — Integration, data, deployment, operations, migration, cost
@@ -1345,7 +1331,6 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 
 **🌙 Evening:** Review [N] Practice Test 2
 
-
 ---
 
 ## Exam simulation week
@@ -1370,13 +1355,11 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 3. Nov 2–13: re-watch the weak domains' lectures, rebuild their trees, redo their TD section-based tests.
 4. Around Nov 10: TD Timed Set 5. Around Nov 12: [N] Practice Test 3.
 
-
 ---
 
 ## Appendix — unscheduled lectures
 
 Left out on purpose: duplicates of scheduled content, basics you already know from SAA, or hands-on demos (you run your own labs). Use them when a topic doesn't click.
-
 
 ### [N] [NEW]
 
