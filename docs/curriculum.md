@@ -36,14 +36,6 @@ Total scheduled video: **~55h raw → ~47h at the speeds above** (M fully, N ~75
 
 Saturdays are consolidation days: no new content.
 
-## Before day 1 (your side)
-
-- [ ] **Book the exam for Sun 1 Nov** (Pearson VUE; Sundays usually mean online proctoring). Fallback: Sat 31 Oct, never later.
-- [ ] **Request the ESL +30 minutes accommodation** (non-native English speaker) in your AWS Certification account *before* booking — it applies to the booking.
-- [ ] **Use your 50 % discount voucher** from your SAA certification (AWS Certification account → Benefits), if your SAA is still active.
-- [ ] Check access to the **Skill Builder official practice exam**.
-- [ ] Sandbox AWS account ready (the Day 1 lab creates the Organization).
-
 ## Weekly overview
 
 | Week | Dates | Theme | Video (eff.) |
