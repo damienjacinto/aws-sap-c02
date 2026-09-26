@@ -2,3 +2,6 @@ site/
 .venv/
 __pycache__/
 .DS_Store
+
+# Local-only notes, never committed
+private/
