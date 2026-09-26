@@ -2,18 +2,6 @@
 
 Day-by-day plan from **Sun 27 Sep** to the **first exam attempt on Sun 1 Nov 2026**, built from the full lecture lists of three Udemy courses, the Tutorials Dojo practice exams, and AWS docs.
 
-## Key dates
-
-| Date | Milestone |
-|---|---|
-| Sun 27 Sep | Day 1 |
-| Sat 10 Oct | Diagnostic — TD Timed Set 1 |
-| Sat 24 Oct | End of content phase |
-| Sun 25 Oct → Sat 31 Oct | Exam simulation week |
-| **Sun 1 Nov** | **Exam — first attempt** |
-| Sun 15 – Mon 16 Nov | Retake window (14-day wait after Nov 1) |
-| **Mon 16 Nov** | **Last day SAP-C02 can be taken** — SAP-C03 goes live Nov 17 |
-
 ## Resources
 
 | Code | Resource | Length | Role | Speed |
