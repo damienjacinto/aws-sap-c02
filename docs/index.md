@@ -4,17 +4,6 @@ Study notes for the **AWS Certified Solutions Architect – Professional (SAP-C0
 
 Most SAP-C02 questions describe a scenario with constraints, and two or three answers look valid. The skill being tested is spotting the **deciding constraint** and choosing the option that fits it best. So these notes are organized around **decisions** instead of services.
 
-## Key dates
-
-| Date | Milestone |
-|---|---|
-| Sun 27 Sep 2026 | Day 1 |
-| Sat 10 Oct | Diagnostic exam (TD Timed Set 1) |
-| Sun 25 – Sat 31 Oct | Exam simulation week |
-| **Sun 1 Nov** | **Exam: first attempt** (booked, ESL +30 min) |
-| Sun 15 – Mon 16 Nov | Retake window, if needed |
-| Mon 16 Nov | Last day SAP-C02 can be taken (SAP-C03 goes live Nov 17) |
-
 ## How to use this site
 
 1. **[Curriculum](curriculum.md)**: the day-by-day plan, with lectures, trees to study, reading, lab brief and evening practice.
