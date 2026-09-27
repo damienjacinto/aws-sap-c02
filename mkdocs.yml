@@ -77,6 +77,8 @@ nav:
       - Identity & access:
           - Will this request be allowed?: decisions/identity/policy-evaluation.md
           - Cross-account access: decisions/identity/cross-account-access.md
+      - Storage:
+          - "Backup: DLM vs AWS Backup vs native": decisions/storage/backup-strategy.md
   - Exam toolkit:
       - Keywords → answers: keywords.md
       - Mistakes log: mistakes.md

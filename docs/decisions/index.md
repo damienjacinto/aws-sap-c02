@@ -17,4 +17,10 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Will this request be allowed?](identity/policy-evaluation.md) | Day 1 |
 | [Cross-account access](identity/cross-account-access.md) | Day 1 |
 
+## Storage
+
+| Decision | Built on |
+|---|---|
+| [Backup: DLM vs AWS Backup vs native](storage/backup-strategy.md) | Day 16 (Wed 14 Oct) |
+
 *New pages are added as the [curriculum](../curriculum.md) progresses.*
