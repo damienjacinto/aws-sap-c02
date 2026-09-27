@@ -23,4 +23,13 @@ Phrases in a question stem that should steer the choice. These are **heuristics,
 | *workforce* single sign-on across many accounts | **IAM Identity Center** + permission sets |
 | *scale permissions without editing policies* as teams grow | **ABAC** with tags |
 
+## Network visibility
+
+| The stem says… | Think… |
+|---|---|
+| inspect the traffic *content* / *payload* / *packets*, run an IDS | **VPC Traffic Mirroring** (copies full packets to an ENI, NLB or GWLB endpoint) |
+| who talked to whom, which ports, accepted or rejected | **VPC Flow Logs** (metadata only, never the payload) |
+| detect threats / compromised instances automatically | **GuardDuty** (analyzes flow logs, DNS logs, CloudTrail) |
+| find software vulnerabilities or unintended network exposure | **Amazon Inspector** |
+
 *This page grows every day. Add a row whenever a practice question teaches a new phrase.*
