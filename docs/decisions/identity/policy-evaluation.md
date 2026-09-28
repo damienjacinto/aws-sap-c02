@@ -113,6 +113,9 @@ In practice, most organizations use a **deny list** as the base and switch to an
 !!! warning "SCPs never grant"
     A distractor like *"attach an SCP that allows s3:\* to the account"* doesn't give anyone permissions. An IAM policy still has to grant them.
 
+!!! warning "Allow-list SCPs and conditions"
+    Until September 2025, `Allow` statements in SCPs could only use `"Resource": "*"` and no `Condition`; only `Deny` statements could be conditional. AWS has since lifted this, but exam questions may still assume the old rule: if a guardrail needs a condition (Region, tag, principal exemption), the expected answer is a **`Deny` with a condition**.
+
 !!! warning "Management account is immune to SCPs"
     Moving a sensitive workload into the management account to "protect it with SCPs" does the opposite. Keep workloads **out** of the management account.
 
