@@ -79,6 +79,35 @@ flowchart TD
 | Narrow one temporary session | **Session policy** | Per-session, no change to the role |
 | Requests through this endpoint may only reach our buckets | **VPC endpoint policy** | Scoped to the network path |
 
+## SCP strategies: deny list vs allow list
+
+| | **Deny list** (default) | **Allow list** |
+|---|---|---|
+| Idea | Everything is allowed except what you explicitly deny | Nothing is allowed except what you explicitly allow |
+| Implementation | Keep the AWS-managed `FullAWSAccess` SCP attached everywhere, then attach SCPs with `Deny` statements to the OUs or accounts | **Detach** `FullAWSAccess` and attach an SCP with `Allow` statements listing the approved services. The allow must exist at **every level** (root → each OU → account), because the effective permissions are the intersection of all levels |
+| Advantages | New AWS services work immediately. Low maintenance. Precise guardrails with `Condition` (e.g. `aws:RequestedRegion`) and exemptions (e.g. `aws:PrincipalArn` for a break-glass role) | Tightest control: only approved services can ever be used. Good fit for regulated or sandbox OUs |
+| Drawbacks | A new service is usable until someone thinks to deny it | Every new service needs an SCP update. A missing allow at one level silently blocks the whole subtree. More maintenance, and the SCP size limit (5,120 chars, max 5 SCPs per target) fills up quickly |
+| Stem keywords | *prevent X*, *deny region Y*, *nobody may disable CloudTrail* | *only approved services*, *explicitly allowed services only* |
+
+```json title="Deny list: block every Region except eu-west-1 (global services exempted)"
+{
+  "Effect": "Deny",
+  "NotAction": ["iam:*", "organizations:*", "sts:*", "cloudfront:*", "route53:*", "support:*"],
+  "Resource": "*",
+  "Condition": { "StringNotEquals": { "aws:RequestedRegion": "eu-west-1" } }
+}
+```
+
+```json title="Allow list: replaces FullAWSAccess on the OU"
+{
+  "Effect": "Allow",
+  "Action": ["ec2:*", "s3:*", "rds:*", "cloudwatch:*"],
+  "Resource": "*"
+}
+```
+
+In practice, most organizations use a **deny list** as the base and switch to an allow list only on specific OUs. Test either one on a sandbox OU before attaching it higher up.
+
 ## Exam traps
 
 !!! warning "SCPs never grant"
