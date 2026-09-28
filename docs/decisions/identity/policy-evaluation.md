@@ -106,6 +106,10 @@ flowchart TD
 }
 ```
 
+!!! tip "What to remember for the exam"
+    - **Deny list:** keep `FullAWSAccess` attached and add `Deny` statements. New AWS services work immediately, and you can add precise conditions and exemptions (for example, a break-glass role).
+    - **Allow list:** detach `FullAWSAccess` and list only the approved services. The allow has to exist at every level from the root down to the account. It gives the tightest control, but each new service needs an SCP update, and a missing allow at one level blocks everything below it.
+
 In practice, most organizations use a **deny list** as the base and switch to an allow list only on specific OUs. Test either one on a sandbox OU before attaching it higher up.
 
 ## Exam traps
