@@ -32,4 +32,14 @@ Phrases in a question stem that should steer the choice. These are **heuristics,
 | detect threats / compromised instances automatically | **GuardDuty** (analyzes flow logs, DNS logs, CloudTrail) |
 | find software vulnerabilities or unintended network exposure | **Amazon Inspector** |
 
+## Load balancing
+
+| The stem says… | Think… |
+|---|---|
+| keep the *client IP*, HTTP/HTTPS traffic | **ALB** + app reads **`X-Forwarded-For`** (ALB never does Proxy Protocol) |
+| keep the *client IP*, non-HTTP TCP/UDP | **NLB**: preserved natively with instance targets (and UDP); IP targets need `preserve_client_ip` |
+| keep the *client IP* through PrivateLink, on-prem or cross-VPC targets | **NLB + Proxy Protocol v2** (the app must parse the header) |
+| client IP must be visible to security groups / firewalls, not just the app | **NLB with client IP preservation**; the target SG must allow the client ranges, not the NLB |
+| *proxy protocol* on a Classic LB | **v1**, TCP listeners only |
+
 *This page grows every day. Add a row whenever a practice question teaches a new phrase.*
