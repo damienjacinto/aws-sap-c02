@@ -22,6 +22,16 @@ tags:
 
 **External ID:** a secret-ish value the third party must pass when assuming the role, set as a condition in the trust policy. It prevents the **confused deputy** problem, where a vendor serving many customers is tricked into using *your* role on behalf of someone else.
 
+### STS APIs for temporary credentials
+
+| API | Use case |
+|---|---|
+| `AssumeRole` | An AWS principal (IAM user or another role) assumes a role in its own or another account |
+| `AssumeRoleWithSAML` | User signs in to an external **SAML IdP**, gets a SAML assertion, and trades it with STS for role credentials |
+| `AssumeRoleWithWebIdentity` | User signs in to a **web IdP** (Google, Facebook, Amazon Cognito…), gets an **OIDC token**, and trades it with STS for role credentials |
+| `GetSessionToken` | An **MFA-enabled IAM user** submits the code from their MFA device to get temporary credentials |
+| `GetFederationToken` | Gets temporary credentials for a **federated user** |
+
 ## Decision tree
 
 ```mermaid
