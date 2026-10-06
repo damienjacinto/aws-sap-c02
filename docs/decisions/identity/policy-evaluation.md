@@ -113,6 +113,49 @@ flowchart TD
 
 In practice, most organizations use a **deny list** as the base and switch to an allow list only on specific OUs. Test either one on a sandbox OU before attaching it higher up.
 
+## Gateway VPC endpoint policies
+
+A **gateway endpoint** exists only for **S3 and DynamoDB**. It's a route table entry (a prefix list target), free, and only reaches the service **in the same Region**. It can't be used from on-premises, a peered VPC or a Transit Gateway attachment: those need an **interface endpoint**.
+
+The **endpoint policy** is a resource-based policy attached to the endpoint. It filters every request that goes through it, but never grants: IAM and the bucket policy must still allow. The default policy allows everything.
+
+Two policies work together, from opposite sides:
+
+| | **Endpoint policy** (on the endpoint) | **Bucket policy** (on the bucket) |
+|---|---|---|
+| Answers | *Which buckets can my VPC reach?* | *From where can my bucket be reached?* |
+| Typical use | **Prevent data exfiltration**: only the company's buckets are reachable from the VPC | **Lock the bucket to the network**: only requests through this endpoint or VPC |
+| Key elements | `Resource` = bucket ARNs, or `aws:ResourceOrgID` | `Deny` with `aws:SourceVpce` or `aws:SourceVpc` |
+
+```json title="Endpoint policy: only buckets owned by our organization"
+{
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": "s3:*",
+    "Resource": "*",
+    "Condition": { "StringEquals": { "aws:ResourceOrgID": "o-abc123" } }
+  }]
+}
+```
+
+```json title="Bucket policy: only reachable through one endpoint"
+{
+  "Effect": "Deny",
+  "Principal": "*",
+  "Action": "s3:*",
+  "Resource": ["arn:aws:s3:::my-bucket", "arn:aws:s3:::my-bucket/*"],
+  "Condition": { "StringNotEquals": { "aws:SourceVpce": "vpce-1a2b3c4d" } }
+}
+```
+
+!!! tip "What to remember for the exam"
+    - **Exfiltration from the VPC** → endpoint policy restricting the buckets. **Bucket only reachable privately** → bucket policy with `aws:SourceVpce`.
+    - **`aws:SourceIp` doesn't work** through an endpoint: requests carry private IPs. Use `aws:SourceVpce` / `aws:SourceVpc`.
+    - A `Deny` on `aws:SourceVpce` also blocks the **console and admins outside the VPC**. Add an exemption (e.g. `aws:PrincipalArn`) if they still need access.
+    - A restrictive endpoint policy can break things that silently use S3: **yum/dnf repos on Amazon Linux**, **ECR image layers**. Allow those AWS-owned buckets explicitly.
+    - **Cross-Region buckets** don't go through the gateway endpoint: without a NAT or IGW, the request fails.
+
 ## Exam traps
 
 !!! warning "SCPs never grant"
