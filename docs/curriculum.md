@@ -722,6 +722,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 
 - Entry point: ALB vs NLB vs GWLB vs Global Accelerator vs CloudFront
 - Static IP / allow-listing requirements
+- [IPv6 with Elastic Load Balancing](decisions/networking/elb-ipv6.md)
 
 **📖 Read**
 

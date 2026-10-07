@@ -17,6 +17,12 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Will this request be allowed?](identity/policy-evaluation.md) | Day 1 |
 | [Cross-account access](identity/cross-account-access.md) | Day 1 |
 
+## Networking
+
+| Decision | Built on |
+|---|---|
+| [IPv6 with Elastic Load Balancing](networking/elb-ipv6.md) | Day 14 (Mon 12 Oct) |
+
 ## Storage
 
 | Decision | Built on |
