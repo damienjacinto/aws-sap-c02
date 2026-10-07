@@ -17,6 +17,12 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Will this request be allowed?](identity/policy-evaluation.md) | Day 1 |
 | [Cross-account access](identity/cross-account-access.md) | Day 1 |
 
+## Security & monitoring
+
+| Decision | Built on |
+|---|---|
+| [CloudTrail: react, alert or keep the logs?](security/cloudtrail.md) | Day 10 (Wed 7 Oct) |
+
 ## Networking
 
 | Decision | Built on |
