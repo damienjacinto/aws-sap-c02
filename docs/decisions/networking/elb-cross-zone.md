@@ -26,6 +26,54 @@ Example: AZ-a has 2 targets, AZ-b has 8. Each node receives 50% of the traffic.
 | Cross-zone **off** | 50% / 2 = **25%** | 50% / 8 = **6.25%** |
 | Cross-zone **on** | 100% / 10 = **10%** | 100% / 10 = **10%** |
 
+=== "Cross-zone off"
+
+    ```mermaid
+    flowchart TD
+        C([Clients: 100%]) -- "50% (DNS)" --> NA[Node AZ-a]
+        C -- "50% (DNS)" --> NB[Node AZ-b]
+        subgraph AZa [AZ-a]
+            NA
+            TA["2 targets<br/>25% each"]
+        end
+        subgraph AZb [AZ-b]
+            NB
+            TB["8 targets<br/>6.25% each"]
+        end
+        NA -- "50% ÷ 2" --> TA
+        NB -- "50% ÷ 8" --> TB
+        classDef hot fill:#c62828,stroke:#8e0000,color:#fff
+        classDef cold fill:#1565c0,stroke:#0d47a1,color:#fff
+        class TA hot
+        class TB cold
+    ```
+
+    Each AZ gets half the traffic whatever its capacity: AZ-a targets carry **4×** the load of AZ-b targets.
+
+=== "Cross-zone on"
+
+    ```mermaid
+    flowchart TD
+        C([Clients: 100%]) -- "50% (DNS)" --> NA[Node AZ-a]
+        C -- "50% (DNS)" --> NB[Node AZ-b]
+        subgraph AZa [AZ-a]
+            NA
+            TA["2 targets<br/>5% + 5% = 10% each"]
+        end
+        subgraph AZb [AZ-b]
+            NB
+            TB["8 targets<br/>5% + 5% = 10% each"]
+        end
+        NA -- "2 × 5%" --> TA
+        NA -- "8 × 5% (cross-AZ)" --> TB
+        NB -- "2 × 5% (cross-AZ)" --> TA
+        NB -- "8 × 5%" --> TB
+        classDef even fill:#2e7d32,stroke:#1b5e20,color:#fff
+        class TA,TB even
+    ```
+
+    Each node splits its 50% over all 10 targets (5% each), so every target ends up at **10%**. The cross-AZ arrows are what NLB and GWLB bill.
+
 **Defaults and cost**
 
 | | Default | Inter-AZ data charge when on | Where to change it |
