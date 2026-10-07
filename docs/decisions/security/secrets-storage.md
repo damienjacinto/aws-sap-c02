@@ -33,6 +33,31 @@ tags:
 - Both work with CloudFormation **dynamic references** (`{{resolve:ssm:…}}`, `{{resolve:secretsmanager:…}}`), ECS task definitions and Lambda.
 - Parameter Store can read a Secrets Manager secret through `/aws/reference/secretsmanager/<name>`: one API for both.
 
+**In one line each**
+
+- **Secrets Manager ($$$):** secrets with a lifecycle. Rotation built in, KMS encryption **mandatory**.
+- **Parameter Store ($):** simple key/value API for config and static secrets. No rotation, KMS encryption **optional** (`SecureString`).
+
+**How rotation works**
+
+```mermaid
+flowchart LR
+    subgraph SMR [Secrets Manager: built in]
+        SCH[Rotation schedule<br/>in the secret] --> LF[Rotation Lambda<br/>provided for RDS, Aurora,<br/>Redshift, DocumentDB]
+        LF -- "1. set new password" --> DB[(Database)]
+        LF -- "2. store new version" --> SEC[Secret]
+    end
+    subgraph PSR [Parameter Store: build it yourself]
+        EB[EventBridge<br/>scheduled rule] --> L2[Your own Lambda]
+        L2 -- "1. set new password" --> DB2[(Database)]
+        L2 -- "2. PutParameter" --> PAR[SecureString]
+    end
+    classDef answer fill:#e65100,stroke:#bf360c,color:#fff
+    class LF,L2 answer
+```
+
+With Secrets Manager the Lambda, its permissions and the versioning (`AWSCURRENT`, `AWSPENDING`, `AWSPREVIOUS`) are handled for you. With Parameter Store you write, test and maintain all of it: that's the *"operational overhead"* the exam penalizes.
+
 ## Decision tree
 
 ```mermaid
