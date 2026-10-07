@@ -105,6 +105,7 @@ flowchart TD
 
 ## Related
 
+- [Cross-zone load balancing](elb-cross-zone.md)
 - AWS docs: [ALB IP address types](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html#ip-address-type)
 - AWS docs: [NLB IP address types](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html#ip-address-type)
 - AWS docs: [IPv6 on AWS (whitepaper)](https://docs.aws.amazon.com/whitepapers/latest/ipv6-on-aws/IPv6-on-AWS.html)

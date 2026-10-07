@@ -21,6 +21,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 
 | Decision | Built on |
 |---|---|
+| [Cross-zone load balancing](networking/elb-cross-zone.md) | Day 14 (Mon 12 Oct) |
 | [IPv6 with Elastic Load Balancing](networking/elb-ipv6.md) | Day 14 (Mon 12 Oct) |
 
 ## Storage
