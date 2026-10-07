@@ -468,7 +468,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 
 **🌳 Decision trees**
 
-- Key management: AWS owned vs AWS managed vs customer managed KMS key vs CloudHSM vs external key store
+- [Key management: AWS owned vs AWS managed vs customer managed KMS key vs CloudHSM vs external key store](decisions/security/kms-key-types.md)
 - Secrets Manager vs Parameter Store
 - Where to terminate TLS (CloudFront / ALB / NLB / instance)
 

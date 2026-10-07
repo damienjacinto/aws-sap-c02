@@ -78,6 +78,7 @@ nav:
           - Will this request be allowed?: decisions/identity/policy-evaluation.md
           - Cross-account access: decisions/identity/cross-account-access.md
       - Security & monitoring:
+          - "KMS key types": decisions/security/kms-key-types.md
           - "CloudTrail: react, alert or keep the logs?": decisions/security/cloudtrail.md
       - Networking:
           - "Cross-zone load balancing": decisions/networking/elb-cross-zone.md
