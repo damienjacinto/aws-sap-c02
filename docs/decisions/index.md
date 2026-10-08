@@ -38,4 +38,10 @@ Each page answers **one question the exam keeps asking**, in the same order:
 |---|---|
 | [Backup: DLM vs AWS Backup vs native](storage/backup-strategy.md) | Day 16 (Wed 14 Oct) |
 
+## Databases
+
+| Decision | Built on |
+|---|---|
+| [RDS Proxy: when does it fix the problem?](databases/rds-proxy.md) | Day 17 (Thu 15 Oct) |
+
 *New pages are added as the [curriculum](../curriculum.md) progresses.*

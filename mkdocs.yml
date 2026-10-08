@@ -86,6 +86,8 @@ nav:
           - IPv6 with Elastic Load Balancing: decisions/networking/elb-ipv6.md
       - Storage:
           - "Backup: DLM vs AWS Backup vs native": decisions/storage/backup-strategy.md
+      - Databases:
+          - "RDS Proxy": decisions/databases/rds-proxy.md
   - Exam toolkit:
       - Keywords → answers: keywords.md
       - Mistakes log: mistakes.md

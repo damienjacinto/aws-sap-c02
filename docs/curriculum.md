@@ -894,6 +894,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 - Database choice: RDS vs Aurora vs DynamoDB vs DocumentDB vs Neptune vs Keyspaces vs Timestream vs Redshift
 - Multi-region database: Aurora Global vs DynamoDB global tables vs cross-region read replica
 - Read scaling & caching: replicas vs ElastiCache vs DAX vs RDS Proxy
+- [RDS Proxy: when does it fix the problem?](decisions/databases/rds-proxy.md)
 
 **📖 Read**
 
