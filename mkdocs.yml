@@ -88,6 +88,7 @@ nav:
           - "Backup: DLM vs AWS Backup vs native": decisions/storage/backup-strategy.md
       - Databases:
           - "RDS Proxy": decisions/databases/rds-proxy.md
+          - "RDS auto scaling": decisions/databases/rds-auto-scaling.md
   - Exam toolkit:
       - Keywords → answers: keywords.md
       - Mistakes log: mistakes.md

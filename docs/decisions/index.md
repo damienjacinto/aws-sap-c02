@@ -43,5 +43,6 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | Decision | Built on |
 |---|---|
 | [RDS Proxy: when does it fix the problem?](databases/rds-proxy.md) | Day 17 (Thu 15 Oct) |
+| [RDS auto scaling: what scales by itself?](databases/rds-auto-scaling.md) | Day 17 (Thu 15 Oct) |
 
 *New pages are added as the [curriculum](../curriculum.md) progresses.*

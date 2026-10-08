@@ -895,6 +895,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 - Multi-region database: Aurora Global vs DynamoDB global tables vs cross-region read replica
 - Read scaling & caching: replicas vs ElastiCache vs DAX vs RDS Proxy
 - [RDS Proxy: when does it fix the problem?](decisions/databases/rds-proxy.md)
+- [RDS auto scaling: what scales by itself?](decisions/databases/rds-auto-scaling.md)
 
 **📖 Read**
 
