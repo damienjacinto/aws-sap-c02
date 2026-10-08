@@ -896,6 +896,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 - Read scaling & caching: replicas vs ElastiCache vs DAX vs RDS Proxy
 - [RDS Proxy: when does it fix the problem?](decisions/databases/rds-proxy.md)
 - [RDS auto scaling: what scales by itself?](decisions/databases/rds-auto-scaling.md)
+- [DynamoDB: how many RCU and WCU?](decisions/databases/dynamodb-capacity.md)
 
 **📖 Read**
 
