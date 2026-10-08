@@ -33,7 +33,34 @@ It increases storage when **all three** are true:
 It adds the **greatest** of: 10 GiB, 10% of current storage, or the growth predicted for the next 7 hours. It never goes above the maximum threshold. No extra charge beyond the storage itself.
 
 - Each **read replica** has its own setting: enable it on the replicas too.
-- **Aurora Auto Scaling** uses Application Auto Scaling target tracking on average **CPU** or **connections** of the replicas. Applications use the **reader endpoint** to benefit.
+
+## Aurora Auto Scaling
+
+Adds and removes **Aurora Replicas** (readers) in a cluster to follow the read load. It's a policy on the cluster, run by **Application Auto Scaling**.
+
+| Setting | What to know |
+|---|---|
+| **Target metric** | Average **CPU** of the readers, or average **connections** to them (or a custom CloudWatch metric) |
+| **Min / max** | 0 to **15** replicas: Aurora's limit per cluster |
+| **Instance class** | New replicas use the **same class as the writer** |
+| **Cooldowns** | Separate scale-out and scale-in cooldowns (default 300 s). Scale-in can be disabled. |
+| **Scheduled scaling** | Raise the min before a known peak (CLI / API) |
+
+```mermaid
+flowchart LR
+    APP[Application] -- reads --> RE[Reader endpoint]
+    APP -- writes --> W[(Writer)]
+    RE --> R1[(Replica)] & R2[(Replica)] & R3[(Replica<br/>added by<br/>auto scaling)]
+    CW[CloudWatch<br/>reader CPU > target] --> AAS[Application<br/>Auto Scaling]
+    AAS -. add / remove .-> R3
+    classDef answer fill:#e65100,stroke:#bf360c,color:#fff
+    class AAS,R3 answer
+```
+
+- **Reads only.** The writer never scales out. For write load: bigger writer, **Aurora Serverless v2**, or sharding (**Aurora Limitless Database**).
+- **Use the reader endpoint.** It load-balances connections across all readers, new ones included. An application pinned to instance endpoints never sees the new replicas.
+- **Not instant.** A new replica takes minutes to be available. For a known daily peak, **scheduled scaling** beats waiting for the CPU target to trip.
+- **Serverless v2 is the other axis:** it scales each instance's **size** (ACUs); auto scaling changes the **number** of readers. They can be combined.
 
 ## Decision tree
 
@@ -73,6 +100,9 @@ flowchart TD
 !!! warning "Auto scaling the instance class"
     No RDS feature changes the instance class automatically. *"Automatically adjust compute capacity"* points to **Aurora Serverless v2**.
 
+!!! warning "Aurora Auto Scaling for write load"
+    *"The writer's CPU is saturated by inserts"*: adding replicas doesn't help, they only serve reads. Scale up the writer or move to Serverless v2.
+
 ## Test yourself
 
 ??? question "1. An RDS for PostgreSQL database's storage grows unpredictably and filled up twice last quarter. Least operational overhead?"
@@ -86,6 +116,9 @@ flowchart TD
 
 ??? question "4. A new application on Aurora has unknown, very spiky write traffic. The team doesn't want to size instances. What do you pick?"
     **Aurora Serverless v2**: compute scales automatically in ACUs between a min and max.
+
+??? question "5. Aurora Auto Scaling added three replicas during a read spike, but the replica CPU stayed high and the new replicas were idle. Why?"
+    The application connects to **instance endpoints** (or a custom endpoint that excludes new instances). It must read through the **reader endpoint** to spread connections to new replicas.
 
 ## Related
 
