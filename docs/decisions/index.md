@@ -25,6 +25,12 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Secrets Manager vs Parameter Store (Standard or Advanced)?](security/secrets-storage.md) | Day 9 (Tue 6 Oct) |
 | [CloudTrail: react, alert or keep the logs?](security/cloudtrail.md) | Day 10 (Wed 7 Oct) |
 
+## Compute
+
+| Decision | Built on |
+|---|---|
+| [Auto Scaling groups: which scaling policy?](compute/asg-scaling-policies.md) | Day 13 (Sun 11 Oct) |
+
 ## Networking
 
 | Decision | Built on |

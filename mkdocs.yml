@@ -81,6 +81,8 @@ nav:
           - "KMS key types": decisions/security/kms-key-types.md
           - "Secrets Manager vs Parameter Store": decisions/security/secrets-storage.md
           - "CloudTrail: react, alert or keep the logs?": decisions/security/cloudtrail.md
+      - Compute:
+          - "ASG scaling policies": decisions/compute/asg-scaling-policies.md
       - Networking:
           - "Cross-zone load balancing": decisions/networking/elb-cross-zone.md
           - IPv6 with Elastic Load Balancing: decisions/networking/elb-ipv6.md

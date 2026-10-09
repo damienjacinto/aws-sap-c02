@@ -670,7 +670,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 **🌳 Decision trees**
 
 - EC2 purchase option: On-Demand vs RI vs Savings Plans vs Spot vs Capacity Reservation
-- Scaling strategy: target tracking vs step vs scheduled vs predictive; lifecycle hooks
+- [Auto Scaling groups: which scaling policy?](decisions/compute/asg-scaling-policies.md)
 - Placement group: cluster vs spread vs partition
 
 **📖 Read**
