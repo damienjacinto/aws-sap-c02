@@ -30,6 +30,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | Decision | Built on |
 |---|---|
 | [Auto Scaling groups: which scaling policy?](compute/asg-scaling-policies.md) | Day 13 (Sun 11 Oct) |
+| [Spot fleets: which tool and which allocation strategy?](compute/spot-fleets.md) | Day 13 (Sun 11 Oct) |
 
 ## Networking
 
