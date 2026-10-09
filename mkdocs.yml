@@ -85,6 +85,7 @@ nav:
           - "ASG scaling policies": decisions/compute/asg-scaling-policies.md
           - "Spot fleets": decisions/compute/spot-fleets.md
       - Networking:
+          - "Route 53 routing policies": decisions/networking/route53-routing-policies.md
           - "Cross-zone load balancing": decisions/networking/elb-cross-zone.md
           - IPv6 with Elastic Load Balancing: decisions/networking/elb-ipv6.md
       - Storage:

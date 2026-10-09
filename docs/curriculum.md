@@ -362,7 +362,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 **🌳 Decision trees**
 
 - Hybrid DNS: Resolver inbound vs outbound endpoints, forwarding rules
-- Route 53 routing policy choice
+- [Route 53: which routing policy?](decisions/networking/route53-routing-policies.md)
 - Private hosted zones across accounts
 
 **📖 Read**

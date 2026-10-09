@@ -36,6 +36,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 
 | Decision | Built on |
 |---|---|
+| [Route 53: which routing policy?](networking/route53-routing-policies.md) | Day 7 (Sun 4 Oct) |
 | [Cross-zone load balancing](networking/elb-cross-zone.md) | Day 14 (Mon 12 Oct) |
 | [IPv6 with Elastic Load Balancing](networking/elb-ipv6.md) | Day 14 (Mon 12 Oct) |
 
