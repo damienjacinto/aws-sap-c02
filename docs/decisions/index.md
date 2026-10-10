@@ -45,6 +45,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | Decision | Built on |
 |---|---|
 | [Backup: DLM vs AWS Backup vs native](storage/backup-strategy.md) | Day 16 (Wed 14 Oct) |
+| [EFS: performance mode, throughput mode and storage class](storage/efs-performance-storage.md) | Day 16 (Wed 14 Oct) |
 
 ## Databases
 
