@@ -834,7 +834,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 **🌳 Decision trees**
 
 - Storage: EBS vs instance store vs EFS vs FSx (Windows / Lustre / ONTAP / OpenZFS) vs S3
-- S3 storage class & lifecycle
+- [S3: which storage class and lifecycle?](decisions/storage/s3-storage-classes.md)
 - S3 data protection: versioning, replication, Object Lock, Backup
 - [Backup: DLM vs AWS Backup vs native backups](decisions/storage/backup-strategy.md)
 - [EFS: performance mode, throughput mode and storage class](decisions/storage/efs-performance-storage.md)

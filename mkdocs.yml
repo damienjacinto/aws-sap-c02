@@ -91,6 +91,7 @@ nav:
       - Storage:
           - "Backup: DLM vs AWS Backup vs native": decisions/storage/backup-strategy.md
           - "EFS performance & storage classes": decisions/storage/efs-performance-storage.md
+          - "S3 storage classes": decisions/storage/s3-storage-classes.md
       - Databases:
           - "RDS Proxy": decisions/databases/rds-proxy.md
           - "RDS auto scaling": decisions/databases/rds-auto-scaling.md
