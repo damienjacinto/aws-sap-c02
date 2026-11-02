@@ -56,4 +56,10 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [RDS auto scaling: what scales by itself?](databases/rds-auto-scaling.md) | Day 17 (Thu 15 Oct) |
 | [DynamoDB: how many RCU and WCU?](databases/dynamodb-capacity.md) | Day 17 (Thu 15 Oct) |
 
+## Migration
+
+| Decision | Built on |
+|---|---|
+| [The 7 Rs: which migration strategy?](migration/seven-rs.md) | Day 23 (Thu 22 Oct) |
+
 *New pages are added as the [curriculum](../curriculum.md) progresses.*

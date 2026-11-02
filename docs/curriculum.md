@@ -1224,7 +1224,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 
 **🌳 Decision trees**
 
-- The 7Rs: choosing a migration strategy
+- [The 7 Rs: which migration strategy?](decisions/migration/seven-rs.md)
 - Migration tooling: MGN vs DMS/SCT vs DataSync vs Transfer Family vs Snow vs Storage Gateway
 - Data transfer: online vs offline (bandwidth × time math)
 

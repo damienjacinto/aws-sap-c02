@@ -96,6 +96,8 @@ nav:
           - "RDS Proxy": decisions/databases/rds-proxy.md
           - "RDS auto scaling": decisions/databases/rds-auto-scaling.md
           - "DynamoDB RCU / WCU": decisions/databases/dynamodb-capacity.md
+      - Migration:
+          - "The 7 Rs": decisions/migration/seven-rs.md
   - Exam toolkit:
       - Keywords → answers: keywords.md
       - Mistakes log: mistakes.md
