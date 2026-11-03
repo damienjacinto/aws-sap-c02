@@ -1075,7 +1075,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 **🌳 Decision trees**
 
 - Streaming ingestion: Kinesis Data Streams vs Firehose vs MSK
-- Analytics engine: Athena vs Redshift vs EMR vs OpenSearch vs Glue
+- Analytics engine: Athena vs Redshift vs EMR vs OpenSearch vs Glue — see [Redshift](decisions/analytics/redshift.md)
 
 **📖 Read**
 

@@ -62,4 +62,10 @@ Each page answers **one question the exam keeps asking**, in the same order:
 |---|---|
 | [The 7 Rs: which migration strategy?](migration/seven-rs.md) | Day 23 (Thu 22 Oct) |
 
+## Analytics
+
+| Decision | Built on |
+|---|---|
+| [Redshift: is it the right engine, and which feature fixes the problem?](analytics/redshift.md) | Day 20 (Mon 19 Oct) |
+
 *New pages are added as the [curriculum](../curriculum.md) progresses.*

@@ -98,6 +98,8 @@ nav:
           - "DynamoDB RCU / WCU": decisions/databases/dynamodb-capacity.md
       - Migration:
           - "The 7 Rs": decisions/migration/seven-rs.md
+      - Analytics:
+          - "Redshift": decisions/analytics/redshift.md
   - Exam toolkit:
       - Keywords → answers: keywords.md
       - Mistakes log: mistakes.md
