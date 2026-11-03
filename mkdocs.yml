@@ -100,6 +100,8 @@ nav:
           - "The 7 Rs": decisions/migration/seven-rs.md
       - Analytics:
           - "Redshift": decisions/analytics/redshift.md
+      - Machine learning:
+          - "AI services": decisions/ml/ai-services.md
   - Exam toolkit:
       - Keywords → answers: keywords.md
       - Mistakes log: mistakes.md

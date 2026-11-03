@@ -1304,6 +1304,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 
 - Cost visibility & control: tags, Cost Explorer, CUR/Data Exports, Budgets actions, Compute Optimizer, Trusted Advisor
 - Purchase commitments: RI (standard/convertible) vs Compute SP vs EC2 Instance SP
+- [AI services: which one does the job?](decisions/ml/ai-services.md)
 
 **📖 Read**
 

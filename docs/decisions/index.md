@@ -68,4 +68,10 @@ Each page answers **one question the exam keeps asking**, in the same order:
 |---|---|
 | [Redshift: is it the right engine, and which feature fixes the problem?](analytics/redshift.md) | Day 20 (Mon 19 Oct) |
 
+## Machine learning
+
+| Decision | Built on |
+|---|---|
+| [AI services: which one does the job?](ml/ai-services.md) | Day 24 (Fri 23 Oct) |
+
 *New pages are added as the [curriculum](../curriculum.md) progresses.*
