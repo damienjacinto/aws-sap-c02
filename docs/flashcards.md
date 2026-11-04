@@ -199,8 +199,8 @@ HOW TO EDIT
 ??? info "Route 53 multivalue answer returns?"
     Up to **8 healthy** records, random. Not a load balancer.
 
-??? tip "Near-instant Regional failover, no DNS caching?"
-    **Global Accelerator.**
+??? tip "An app runs in two Regions. Route 53 failover is too slow because clients cache DNS answers. Which service fails over between Regions almost instantly?"
+    **AWS Global Accelerator.** Clients use 2 static anycast IPs that never change; Global Accelerator health-checks the endpoints and shifts traffic to the healthy Region in seconds, with no DNS TTL to wait for.
 
 ## [Cross-zone load balancing](decisions/networking/elb-cross-zone.md)
 
