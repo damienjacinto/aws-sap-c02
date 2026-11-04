@@ -69,6 +69,9 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 
+extra:
+  generator: false
+
 extra_css:
   - stylesheets/flashcards.css
 
