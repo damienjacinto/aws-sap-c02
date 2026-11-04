@@ -147,8 +147,8 @@ HOW TO EDIT
 ??? tip "Default scaling policy, least overhead?"
     **Target tracking.**
 
-??? tip "Scale SQS workers on which metric?"
-    **Backlog per instance** = messages visible ÷ InService instances.
+??? tip "EC2 instances in an Auto Scaling group process messages from an SQS queue. Which metric should the target tracking policy use?"
+    **Backlog per instance** = `ApproximateNumberOfMessagesVisible` ÷ number of InService instances (published as a custom metric). Target = how many messages one instance can handle within the acceptable delay. Queue length alone doesn't account for the fleet size.
 
 ??? warning "Predictive scaling for Black Friday?"
     No: predictive needs a **recurring** pattern. One-off event → **scheduled** scaling.
