@@ -88,7 +88,7 @@
       type.textContent = TYPES[c.type];
       front.innerHTML = c.front;
       back.innerHTML = c.back +
-        (c.source ? '<p class="fc-source"><a href="' + c.source.href + '">Go deeper: ' + c.source.title + " →</a></p>" : "");
+        (c.source ? '<p class="fc-source"><a href="' + c.source.href + '" target="_blank" rel="noopener">Go deeper: ' + c.source.title + " →</a></p>" : "");
       back.hidden = true;
       hint.textContent = touch ? "Tap to reveal" : "Click or press Space to reveal";
       hint.hidden = false;
