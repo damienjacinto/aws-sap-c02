@@ -1,0 +1,148 @@
+/* Flashcards page. Uses Material's color variables, so light and dark modes both work. */
+#fc-app {
+  --fc-info: #1565c0;
+  --fc-warning: #e65100;
+  --fc-tip: #2e7d32;
+  max-width: 44rem;
+  margin: 1.5rem auto;
+  user-select: none;
+}
+
+.fc-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
+}
+.fc-count { font-weight: 700; }
+.fc-missed { color: var(--fc-warning); font-weight: 600; }
+.fc-bar .fc-shuffle { margin-left: auto; }
+
+.fc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 18rem;
+  padding: 2.5rem 2rem 2rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 6px solid var(--fc-accent, var(--md-primary-fg-color));
+  border-radius: 0.6rem;
+  background: var(--md-default-bg-color);
+  box-shadow: var(--md-shadow-z2);
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.fc-card:hover, .fc-card:focus-visible { box-shadow: var(--md-shadow-z3); }
+.fc-card:active { transform: scale(0.995); }
+.fc-card.fc-info { --fc-accent: var(--fc-info); }
+.fc-card.fc-warning { --fc-accent: var(--fc-warning); }
+.fc-card.fc-tip { --fc-accent: var(--fc-tip); }
+
+.fc-type {
+  position: absolute;
+  top: 0.8rem;
+  left: 1rem;
+  padding: 0.1rem 0.55rem;
+  border-radius: 1rem;
+  background: var(--fc-accent);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fc-front {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+.fc-flipped .fc-front {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--md-default-fg-color--light);
+}
+
+.fc-back {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--md-default-fg-color--lightest);
+  font-size: 1rem;
+  line-height: 1.55;
+  animation: fc-in 0.2s ease-out;
+}
+.fc-back p { margin: 0 0 0.6em; }
+.fc-back ol, .fc-back ul { margin: 0 0 0.6em; }
+.fc-back .fc-source { margin: 0.8rem 0 0; font-size: 0.75rem; }
+
+.fc-hint {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--lighter);
+}
+
+@keyframes fc-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.fc-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+}
+
+.fc-btn {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fc-btn:hover:not(:disabled) { border-color: var(--md-accent-fg-color); color: var(--md-accent-fg-color); }
+.fc-btn:disabled { opacity: 0.4; cursor: default; }
+.fc-miss { color: var(--fc-warning); border-color: var(--fc-warning); }
+.fc-next {
+  background: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+.fc-next:hover:not(:disabled) { color: var(--md-primary-bg-color); opacity: 0.9; }
+
+.fc-keys {
+  margin-top: 0.8rem;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* Phones and small screens */
+@media (max-width: 600px) {
+  #fc-app { margin: 0.75rem 0 1rem; }
+  .fc-card {
+    min-height: 42vh;
+    padding: 2.5rem 1.1rem 1.4rem;
+  }
+  .fc-front { font-size: 1.05rem; }
+  .fc-back { font-size: 0.95rem; }
+  .fc-btn { padding: 0.85rem 0.4rem; font-size: 0.85rem; }
+  .fc-label { display: none; }
+}
+
+/* Touch devices: bigger hit areas, no hover effect */
+@media (pointer: coarse) {
+  .fc-btn { min-height: 2.9rem; }
+  .fc-card:hover { box-shadow: var(--md-shadow-z2); }
+}
