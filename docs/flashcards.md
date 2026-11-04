@@ -113,8 +113,8 @@ HOW TO EDIT
 ??? tip "Cheapest place for a static API key?"
     **Parameter Store Standard**, `SecureString`. Free.
 
-??? info "Max value size: Standard, Advanced, Secrets Manager?"
-    **4 KB · 8 KB · 64 KB.**
+??? info "Max value size: Parameter Store Standard, Parameter Store Advanced, Secrets Manager?"
+    Parameter Store Standard **4 KB** · Parameter Store Advanced **8 KB** · Secrets Manager **64 KB**.
 
 ??? info "Parameter Store or Secrets Manager: share with another account?"
     Parameter Store **Advanced** via **RAM**. Secrets Manager: **resource policy + customer managed key**.
