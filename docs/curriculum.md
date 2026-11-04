@@ -298,7 +298,7 @@ Total scheduled video: **~55h raw → ~47h at the speeds above** (M fully, N ~75
 **🌳 Decision trees**
 
 - Hybrid connectivity: Site-to-Site VPN vs Direct Connect vs both
-- Direct Connect resiliency and DX Gateway vs Transit Gateway
+- [Direct Connect: which VIF, and how to make it resilient?](decisions/networking/direct-connect.md)
 - TGW segmentation with route tables
 
 **📖 Read**
