@@ -176,16 +176,13 @@ HOW TO EDIT
 ??? info "Spot interruption notice?"
     **2 minutes**, via **EventBridge** or instance metadata. A **rebalance recommendation** may come earlier.
 
-??? warning "Cancel a Spot request: are the instances terminated?"
-    **No.** Terminate them too, or a persistent request relaunches them.
+??? warning "You cancel a Spot Instance request (or a Spot Fleet). What happens to the Spot Instances it already launched?"
+    **They keep running.** Canceling only stops new launches. Terminate the instances yourself (or cancel the fleet with the terminate option); otherwise a **persistent** request relaunches them.
 
 ??? tip "A service on Spot must always serve traffic?"
     ASG **mixed instances** with an **On-Demand base**.
 
 ## [Route 53 routing policies](decisions/networking/route53-routing-policies.md)
-
-??? tip "Best performance worldwide vs users in country X must…?"
-    **Latency** vs **geolocation**.
 
 ??? warning "Geolocation records without a default record?"
     Users matching no location get **no answer**.
