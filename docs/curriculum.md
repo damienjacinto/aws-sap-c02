@@ -840,6 +840,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 - [EFS: performance mode, throughput mode and storage class](decisions/storage/efs-performance-storage.md)
 - [FSx: which flavor, which deployment, and what not to touch?](decisions/storage/fsx.md)
 - [Storage Gateway: which gateway type for a hybrid workload?](decisions/storage/storage-gateway.md)
+- [DataSync, S3 Transfer Acceleration, File Gateway or Volume Gateway?](decisions/storage/data-transfer.md)
 
 **📖 Read**
 

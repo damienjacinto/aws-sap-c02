@@ -95,6 +95,7 @@ nav:
           - "S3 storage classes": decisions/storage/s3-storage-classes.md
           - "FSx: flavor, deployment & failover": decisions/storage/fsx.md
           - "Storage Gateway": decisions/storage/storage-gateway.md
+          - "DataSync vs Transfer Acceleration vs gateways": decisions/storage/data-transfer.md
       - Databases:
           - "RDS Proxy": decisions/databases/rds-proxy.md
           - "RDS auto scaling": decisions/databases/rds-auto-scaling.md

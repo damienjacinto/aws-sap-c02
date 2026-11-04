@@ -121,6 +121,7 @@ flowchart TD
 
 ## Related
 
+- [DataSync, S3 Transfer Acceleration, File Gateway or Volume Gateway?](data-transfer.md)
 - [FSx: which flavor, which deployment, and what not to touch?](fsx.md)
 - [S3: which storage class and lifecycle?](s3-storage-classes.md)
 - [Backup: DLM vs AWS Backup vs native](backup-strategy.md)
