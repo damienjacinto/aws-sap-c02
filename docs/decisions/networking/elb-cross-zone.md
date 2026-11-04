@@ -83,6 +83,38 @@ Example: AZ-a has 2 targets, AZ-b has 8. Each node receives 50% of the traffic.
 | **GWLB** | Off | ✅ charged | Load balancer |
 | **CLB** | On from the console, off from API/CLI | ❌ free | Load balancer |
 
+### ALB example: one setting per target group
+
+On an ALB, cross-zone is always on at the load balancer level. Each **target group** has its own attribute `load_balancing.cross_zone.enabled`: `use_load_balancer_configuration` (default, so on), `true` or `false`. Two target groups behind the same ALB can therefore behave differently.
+
+Example: 2 AZs, each target group has **1 target in AZ-a and 3 in AZ-b**. Each ALB node receives 50% of the requests.
+
+```mermaid
+flowchart TD
+    C([Clients: 100%]) -- "50% (DNS)" --> NA[ALB node AZ-a]
+    C -- "50% (DNS)" --> NB[ALB node AZ-b]
+    NA & NB --> R{{Listener rule}}
+    R -- "/app/*" --> TGON["TG app<br/>cross-zone ON (default)"]
+    R -- "/zonal/*" --> TGOFF["TG zonal<br/>cross-zone OFF"]
+    TGON --> A1["AZ-a: 1 target<br/>100% ÷ 4 = 25%"]
+    TGON --> B1["AZ-b: 3 targets<br/>25% each"]
+    TGOFF --> A2["AZ-a: 1 target<br/>50% ÷ 1 = 50%"]
+    TGOFF --> B2["AZ-b: 3 targets<br/>50% ÷ 3 ≈ 16.7% each"]
+    classDef even fill:#2e7d32,stroke:#1b5e20,color:#fff
+    classDef hot fill:#c62828,stroke:#8e0000,color:#fff
+    classDef cold fill:#1565c0,stroke:#0d47a1,color:#fff
+    class A1,B1 even
+    class A2 hot
+    class B2 cold
+```
+
+| Target group | AZ-a target | Each AZ-b target | Load ratio |
+|---|---|---|---|
+| **app** (on) | 25% | 25% | 1 : 1 |
+| **zonal** (off) | **50%** | 16.7% | **3 : 1**: the lone AZ-a target is overloaded |
+
+Turning `zonal` off only makes sense if you also keep the **same number of targets per AZ** (e.g. 2 + 2 → 25% each), which is what zonal shift and AZ isolation need.
+
 ## Decision tree
 
 ```mermaid
