@@ -15,9 +15,12 @@
   function collect(app) {
     var cards = [];
     var source = null;
+    var deck = "Cards";
     var n = app.nextElementSibling;
     while (n) {
-      if (n.tagName === "H2") {
+      if (n.classList && n.classList.contains("fc-deck")) {
+        deck = n.getAttribute("data-name") || deck;
+      } else if (n.tagName === "H2") {
         var a = n.querySelector("a[href]:not(.headerlink)");
         source = a ? { href: a.getAttribute("href"), title: a.textContent } : null;
       } else if (n.tagName === "DETAILS") {
@@ -28,7 +31,7 @@
           Array.prototype.forEach.call(n.childNodes, function (c) {
             if (c !== summary) back.appendChild(c.cloneNode(true));
           });
-          cards.push({ type: type, front: summary.innerHTML, back: back.innerHTML, source: source });
+          cards.push({ type: type, front: summary.innerHTML, back: back.innerHTML, source: source, deck: deck });
         }
       }
       n.style.display = "none"; // Material styles <details>, so [hidden] alone is not enough
@@ -46,7 +49,19 @@
     if (!cards.length) return;
 
     var touch = window.matchMedia("(pointer: coarse)").matches;
+    var deckNames = [];
+    cards.forEach(function (c) { if (deckNames.indexOf(c.deck) < 0) deckNames.push(c.deck); });
+    var deckButtons = deckNames.length > 1
+      ? '<div class="fc-decks" role="group" aria-label="Deck">' +
+          ["All"].concat(deckNames).map(function (d) {
+            var size = d === "All" ? cards.length : cards.filter(function (c) { return c.deck === d; }).length;
+            return '<button type="button" class="fc-btn fc-deck-btn" data-deck="' + d + '">' + d + ' <span class="fc-deck-size">' + size + "</span></button>";
+          }).join("") +
+        "</div>"
+      : "";
+
     app.innerHTML =
+      deckButtons +
       '<div class="fc-bar">' +
         '<span class="fc-count"></span>' +
         '<span class="fc-missed"></span>' +
@@ -73,11 +88,18 @@
     var card = $(".fc-card"), front = $(".fc-front"), back = $(".fc-back"),
         type = $(".fc-type"), hint = $(".fc-hint"), count = $(".fc-count"), missedEl = $(".fc-missed");
 
-    var deck, pos, flipped, missed;
+    var deck, pos, flipped, missed, current = "All";
 
     function start() {
-      deck = shuffle(cards.map(function (_, i) { return i; }));
+      var ids = [];
+      cards.forEach(function (c, i) { if (current === "All" || c.deck === current) ids.push(i); });
+      deck = shuffle(ids);
       pos = 0; missed = 0;
+      Array.prototype.forEach.call(app.querySelectorAll(".fc-deck-btn"), function (b) {
+        var on = b.getAttribute("data-deck") === current;
+        b.classList.toggle("fc-active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
       render();
     }
 
@@ -127,6 +149,9 @@
     $(".fc-prev").addEventListener("click", prev);
     $(".fc-miss").addEventListener("click", miss);
     $(".fc-shuffle").addEventListener("click", start);
+    Array.prototype.forEach.call(app.querySelectorAll(".fc-deck-btn"), function (b) {
+      b.addEventListener("click", function () { current = b.getAttribute("data-deck"); start(); });
+    });
 
     document.addEventListener("keydown", function (e) {
       if (!document.body.contains(app)) return;

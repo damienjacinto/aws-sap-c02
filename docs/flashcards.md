@@ -5,7 +5,7 @@ hide:
 
 # Flashcards
 
-Shuffled on every visit. Flip the card, then **Next**, or **Missed** to see it again later in the session.
+**From the site**: built from the decision pages. **Exam extras**: other things worth knowing for SAP-C02. Flip, then **Next**, or **Missed** to see the card again later.
 
 <div id="fc-app"></div>
 
@@ -16,7 +16,10 @@ HOW TO EDIT
     info = Service · warning = Warning · tip = Tip
 - No double quotes inside the front text.
 - To prune, delete the block.
+- Decks: a <div class="fc-deck" data-name="..."></div> line starts a deck; every card below it belongs to that deck.
 -->
+
+<div class="fc-deck" data-name="From the site"></div>
 
 ## [Will this request be allowed?](decisions/identity/policy-evaluation.md)
 
@@ -501,3 +504,355 @@ HOW TO EDIT
 
 ??? info "Humans review low-confidence results?"
     **Amazon A2I.**
+
+<div class="fc-deck" data-name="Exam extras"></div>
+
+## Multi-account and governance
+
+??? tip "A company wants a new multi-account environment with guardrails, account vending and centralized logging, with the least effort. Which service?"
+    **AWS Control Tower.** It sets up a landing zone (log archive and audit accounts), **Account Factory** for new accounts, and controls (guardrails) on OUs.
+
+??? info "AWS Control Tower controls: what implements preventive, detective and proactive controls?"
+    **Preventive** = SCPs (block the action). **Detective** = AWS Config rules (report non-compliance). **Proactive** = CloudFormation Hooks (check resources before they're created).
+
+??? tip "AWS Organizations: how do you enforce the same tag keys and allowed values across every account?"
+    **Tag policies.** To also *require* a tag at creation, add an SCP that denies the create action when the tag is missing.
+
+??? tip "A security account must manage GuardDuty, Security Hub or Config for the whole organization, not the management account. How?"
+    Register it as a **delegated administrator** for that service in AWS Organizations.
+
+??? info "AWS Organizations consolidated billing: what's the benefit besides a single bill?"
+    Usage is **aggregated for volume pricing tiers**, and **Reserved Instance and Savings Plans discounts are shared** across accounts (sharing can be turned off per account).
+
+??? tip "Deploy the same CloudFormation stack in every account of an OU, including accounts created later. How?"
+    **CloudFormation StackSets** with **service-managed permissions** and **automatic deployment** turned on.
+
+??? tip "Developers must launch only approved, pre-configured products (e.g. a hardened EC2 stack) without getting broad IAM permissions. Which service?"
+    **AWS Service Catalog.** A **launch constraint** gives the product an IAM role, so users only need permission to launch the product.
+
+## Identity and directories
+
+??? tip "Employees must sign in once with the company's existing Okta or Entra ID and access many AWS accounts. Which service?"
+    **IAM Identity Center** connected to the external IdP (**SAML 2.0** for sign-in, **SCIM** to sync users and groups), with permission sets per account.
+
+??? info "Amazon Cognito: user pool vs identity pool?"
+    **User pool** = sign-up / sign-in directory, returns **JWT tokens**. **Identity pool** = exchanges an identity (user pool, Google, SAML…) for **temporary AWS credentials**.
+
+??? tip "A mobile app's users must upload photos directly to S3 with temporary AWS credentials. Which service gives those credentials?"
+    **Cognito identity pool** (federated identities), with an IAM role scoped per user, e.g. `${cognito-identity.amazonaws.com:sub}` in the S3 prefix.
+
+??? tip "AWS apps (WorkSpaces, EC2 domain join…) must authenticate against the on-prem Active Directory, without copying users to AWS. Which Directory Service option?"
+    **AD Connector**: a proxy to the on-prem AD, nothing stored in AWS. **AWS Managed Microsoft AD** is a real AD in AWS (can trust the on-prem AD).
+
+??? warning "Directory Service: create a trust between Simple AD and the on-prem Active Directory?"
+    **Simple AD doesn't support trusts.** For a trust, use **AWS Managed Microsoft AD**.
+
+??? tip "Find every resource (bucket, role, KMS key…) shared with a principal outside the organization. Which service?"
+    **IAM Access Analyzer** (external access findings). It also validates policies and generates least-privilege policies from CloudTrail activity.
+
+## Security services
+
+??? tip "Detect threats (crypto-mining, compromised credentials) from CloudTrail, VPC Flow Logs and DNS logs, with no agent to install. Which service?"
+    **Amazon GuardDuty.**
+
+??? tip "Find buckets containing personal data (PII) across all S3 buckets of the organization. Which service?"
+    **Amazon Macie.**
+
+??? tip "Continuously scan EC2 instances, ECR container images and Lambda functions for software vulnerabilities. Which service?"
+    **Amazon Inspector.**
+
+??? tip "Aggregate security findings from all accounts and check them against CIS and AWS Foundational Security Best Practices. Which service?"
+    **AWS Security Hub.**
+
+??? tip "Investigate the root cause of a GuardDuty finding with a graph of related activity. Which service?"
+    **Amazon Detective.**
+
+??? tip "Centrally enforce AWS WAF rules, Shield Advanced, security groups and Network Firewall policies across all accounts, including new ones. Which service?"
+    **AWS Firewall Manager** (requires AWS Organizations and AWS Config).
+
+??? info "AWS Shield Standard vs Shield Advanced?"
+    **Standard**: free, automatic, layer 3/4 protection. **Advanced**: paid, **Shield Response Team (SRT)**, **cost protection** for scaling during an attack, layer 7 protection with WAF, health-based detection.
+
+??? tip "Block SQL injection and rate-limit requests per IP in front of CloudFront, an ALB or API Gateway. Which service?"
+    **AWS WAF**: managed rule groups + a **rate-based rule**.
+
+??? tip "All VPC egress traffic needs managed stateful inspection and domain-name filtering. Which service?"
+    **AWS Network Firewall**, usually in a central inspection VPC behind a Transit Gateway.
+
+??? tip "Continuously check that resources stay compliant (e.g. no public buckets, encrypted volumes) and fix them automatically. Which service?"
+    **AWS Config rules** with **automatic remediation** (SSM Automation documents). Package rules for the org with **conformance packs**.
+
+??? info "ACM certificate for a CloudFront distribution: in which Region must it be? And for an ALB?"
+    **CloudFront: us-east-1** (N. Virginia). **ALB: the ALB's own Region.**
+
+??? tip "Process highly sensitive data on EC2 in an environment isolated even from the instance's root user and admins. What do you use?"
+    **AWS Nitro Enclaves.**
+
+## Networking
+
+??? warning "VPC peering: A is peered with B, and B with C. Can A reach C?"
+    **No**, peering isn't transitive. Peer A and C directly, or use a **Transit Gateway**.
+
+??? warning "Two VPCs with overlapping CIDRs must communicate. Can you peer them?"
+    **No.** Expose the specific service with **PrivateLink** (endpoint service behind an NLB), or re-address one VPC.
+
+??? tip "A SaaS provider must expose one service privately to hundreds of customer VPCs, with overlapping CIDRs, in one direction only. What do you use?"
+    **AWS PrivateLink**: an **endpoint service** behind a **Network Load Balancer**; customers create interface endpoints.
+
+??? tip "On-prem servers must resolve names in a Route 53 private hosted zone. What do you create?"
+    A **Route 53 Resolver inbound endpoint** in the VPC, and a conditional forwarder on the on-prem DNS servers pointing to it.
+
+??? tip "EC2 instances in many VPCs must resolve the on-prem domain corp.local. What do you create?"
+    A **Route 53 Resolver outbound endpoint** + a **forwarding rule** for the domain, **shared with RAM** to the other accounts and associated with their VPCs.
+
+??? tip "Dozens of VPCs each have NAT gateways. How do you centralize internet egress to cut cost and inspect traffic?"
+    **Transit Gateway** + a central **egress VPC** with NAT gateways (and optionally Network Firewall). Spoke VPCs route `0.0.0.0/0` to the TGW.
+
+??? info "Transit Gateway: how do you keep dev and prod VPCs isolated while both reach a shared-services VPC?"
+    **Separate TGW route tables**: dev and prod attachments associate with their own route table, which only has routes (propagations) to shared services.
+
+??? info "NAT gateway: how do you make it highly available?"
+    A NAT gateway lives in **one AZ**. Create **one per AZ** and route each private subnet to the NAT gateway in its own AZ.
+
+??? tip "Insert third-party firewall appliances transparently into traffic flows, with automatic scaling. Which load balancer?"
+    **Gateway Load Balancer** (GENEVE, with GWLB endpoints in the VPCs).
+
+??? warning "An IDS needs the full packet contents of traffic in a VPC. Are VPC Flow Logs enough?"
+    **No**, Flow Logs only record metadata (IPs, ports, bytes, accept/reject). Full packets → **VPC Traffic Mirroring**.
+
+??? tip "One Site-to-Site VPN tunnel is limited to about 1.25 Gbps. How do you get more VPN bandwidth to AWS?"
+    Terminate several VPN connections on a **Transit Gateway** with **ECMP** enabled, and spread traffic across them.
+
+??? tip "Hundreds of remote employees need VPN access to resources in a VPC from their laptops. Which service?"
+    **AWS Client VPN.** (Site-to-Site VPN is for networks, not individual users.)
+
+## CloudFront and edge
+
+??? tip "An S3 bucket is the origin of a CloudFront distribution. How do you make sure the bucket can only be read through CloudFront?"
+    **Origin Access Control (OAC)** + a bucket policy allowing the `cloudfront.amazonaws.com` principal for that distribution. (OAI is the legacy version.)
+
+??? tip "CloudFront: paying users must access many private files (a whole video library). Signed URLs or signed cookies?"
+    **Signed cookies** (many files, URLs unchanged). **Signed URLs** for a single file or clients that don't support cookies.
+
+??? info "CloudFront Functions vs Lambda@Edge?"
+    **CloudFront Functions**: viewer request/response only, JavaScript, sub-millisecond, very cheap (header and URL rewrites, redirects). **Lambda@Edge**: also origin request/response, network access, longer runtime, Node.js/Python.
+
+??? tip "CloudFront must switch to a backup origin when the primary returns 5xx errors. What do you configure?"
+    An **origin group** (primary + secondary origin, failover on chosen status codes).
+
+??? tip "Content must not be served to users in certain countries. What do you use on CloudFront?"
+    **Geographic restrictions** (allow list or block list of countries).
+
+??? info "AWS Global Accelerator vs CloudFront?"
+    **Global Accelerator**: TCP/UDP, **2 static anycast IPs**, no caching, fast Regional failover. **CloudFront**: HTTP(S) **CDN with caching** at the edge.
+
+## Compute and serverless
+
+??? info "AWS Lambda: maximum timeout and memory?"
+    **15 minutes**, **10,240 MB**. Longer jobs → ECS/Fargate, Batch or Step Functions.
+
+??? tip "A latency-critical API on Lambda suffers from cold starts. What do you configure?"
+    **Provisioned concurrency** (pre-initialized environments). For Java, Python and .NET, **SnapStart** is the cheaper alternative.
+
+??? tip "One Lambda function must always have capacity, and must not be able to use up the account's concurrency. What do you set?"
+    **Reserved concurrency** on that function: it's both a guaranteed minimum and a maximum.
+
+??? tip "A workflow waits for a human approval and can last several weeks. Step Functions Standard or Express?"
+    **Standard** (up to **1 year**, exactly-once). **Express** = up to **5 minutes**, high volume, at-least-once.
+
+??? info "API Gateway: the three endpoint types?"
+    **Edge-optimized** (through CloudFront, global clients), **Regional** (clients in the same Region, or your own CloudFront), **Private** (only from a VPC via an interface endpoint).
+
+??? tip "API Gateway: each customer must get its own request quota and throttling limit. What do you configure?"
+    **Usage plans** with **API keys** (per-key throttling and quotas).
+
+??? info "EC2 placement groups: cluster, spread and partition?"
+    **Cluster**: one AZ, lowest latency (HPC). **Spread**: each instance on distinct hardware, **max 7 per AZ** (critical instances). **Partition**: groups of instances on separate racks (HDFS, Cassandra, Kafka).
+
+??? info "Elastic Beanstalk: which deployment policies avoid downtime and roll back fastest?"
+    **Immutable** (new instances in a new ASG, swapped in when healthy) and **blue/green** (new environment, **swap environment URLs**). All-at-once has downtime; rolling reduces capacity.
+
+??? tip "A new Lambda version must get 10% of traffic for 10 minutes, then 100%, with automatic rollback on alarms. How?"
+    **CodeDeploy** with a **canary** deployment configuration (e.g. `Canary10Percent10Minutes`) shifting traffic between **Lambda alias** versions.
+
+??? warning "EC2 instance store for data that must survive a stop or a hardware failure?"
+    **No.** Instance store is lost when the instance is **stopped, terminated** or the host fails. Use **EBS** (or replicate the data).
+
+??? info "EBS gp3 vs io2 Block Express?"
+    **gp3**: general purpose, IOPS and throughput set **independently of size**, cheapest SSD. **io2 Block Express**: highest IOPS, sub-ms latency, **99.999% durability**, **Multi-Attach**: critical databases.
+
+??? tip "Applications need single-digit-millisecond latency for users in one city / on 5G devices / in the company's own data center. Which AWS infrastructure for each?"
+    **Local Zones** / **Wavelength** / **Outposts**.
+
+## Messaging and streaming
+
+??? info "SQS FIFO queue: ordering and throughput?"
+    Order kept **per message group ID**, **exactly-once** processing (deduplication window 5 min). **300 msg/s** per API action, **3,000** with batching, higher in high-throughput mode.
+
+??? tip "SQS messages are processed twice because processing takes longer than expected. What do you change?"
+    Increase the **visibility timeout** (or extend it with `ChangeMessageVisibility` while processing).
+
+??? tip "Some SQS messages keep failing and block the consumers. What do you add?"
+    A **dead-letter queue** with a **maxReceiveCount** in the redrive policy.
+
+??? info "SQS message retention: default and maximum?"
+    **4 days** by default, up to **14 days**.
+
+??? tip "One event must be delivered to several independent consumers, each processing at its own pace. Which pattern?"
+    **SNS fan-out**: one SNS topic → several **SQS queues** (or an EventBridge rule with several targets).
+
+??? info "Kinesis Data Streams vs Amazon Data Firehose?"
+    **Data Streams**: real time, your own consumers, **replay**, retention 24 h to 365 days, shards. **Firehose**: fully managed **delivery** to S3, Redshift, OpenSearch, Splunk…, buffering (near real time), no replay, no code.
+
+??? tip "Several Kinesis Data Streams consumers compete for the read throughput of the same shards. What fixes it?"
+    **Enhanced fan-out**: each consumer gets its own **2 MB/s per shard**, pushed over HTTP/2.
+
+??? tip "Events that went through an EventBridge event bus must be replayed after a bug fix. What do you need?"
+    **EventBridge archive and replay** (archive the bus, replay a time window).
+
+??? tip "Migrate an on-prem ActiveMQ or RabbitMQ broker without changing application code. Which service?"
+    **Amazon MQ.** SQS/SNS would need code changes (different APIs and protocols).
+
+## Databases
+
+??? info "Aurora Global Database: typical RPO and RTO for a Regional failover?"
+    **RPO ≈ 1 second** (storage-level replication), **RTO < 1 minute** (promote a secondary Region).
+
+??? tip "Testers need a full copy of a 5 TB production Aurora database in minutes, at low cost. How?"
+    **Aurora cloning** (copy-on-write: only changed pages use new storage).
+
+??? info "RDS Multi-AZ (instance) vs read replica?"
+    **Multi-AZ instance**: **synchronous** standby for HA, automatic failover, **not readable**. **Read replica**: **asynchronous**, readable, can be in another Region, can be promoted.
+
+??? info "RDS Multi-AZ DB cluster deployment: what's different?"
+    **1 writer + 2 readable standbys** in 3 AZs, faster failover (typically under 35 s), MySQL and PostgreSQL.
+
+??? tip "A DynamoDB app must accept reads and writes in several Regions (active-active). What do you use?"
+    **DynamoDB global tables.**
+
+??? tip "Trigger a Lambda function every time an item changes in a DynamoDB table. What do you enable?"
+    **DynamoDB Streams** + a Lambda event source mapping.
+
+??? info "ElastiCache: Redis (Valkey) vs Memcached?"
+    **Redis/Valkey**: replication, **Multi-AZ failover**, persistence, rich data structures (sorted sets, pub/sub). **Memcached**: simple, multithreaded, **no replication or persistence**.
+
+??? tip "A game needs a real-time leaderboard sorted by score. Which service and feature?"
+    **ElastiCache for Redis/Valkey** with **sorted sets**.
+
+??? tip "Purpose-built databases: graph · time series · MongoDB-compatible · Cassandra-compatible?"
+    **Neptune** · **Timestream** · **DocumentDB** · **Keyspaces**.
+
+## Disaster recovery and migration
+
+??? info "The four DR strategies, from slowest/cheapest to fastest/most expensive?"
+    **Backup & restore** (hours) → **Pilot light** (data replicated, core services off; tens of minutes) → **Warm standby** (scaled-down full copy running; minutes) → **Multi-site active/active** (near zero).
+
+??? tip "On-prem servers need continuous block-level replication to AWS and recovery in minutes after a disaster. Which service?"
+    **AWS Elastic Disaster Recovery** (DRS).
+
+??? tip "Rehost hundreds of on-prem servers to EC2 with continuous replication and a short cutover window. Which service?"
+    **AWS Application Migration Service** (MGN).
+
+??? tip "Migrate a production database to AWS with minimal downtime. Which DMS mode?"
+    **Full load + change data capture (CDC)**: copy the data, then keep replicating changes until cutover.
+
+??? info "AWS Application Discovery Service: agentless vs agent-based discovery?"
+    **Agentless** (VMware vCenter): VM inventory and utilization. **Agent-based**: also **processes and network connections** → server **dependency mapping**.
+
+??? tip "Petabytes must move to AWS but the network is too slow. What do you use?"
+    Several **AWS Snowball Edge** devices (Snowmobile is retired). Then DataSync for the changes.
+
+??? tip "Build the business case (TCO) for migrating a data center to AWS. Which service?"
+    **Migration Evaluator.**
+
+## S3 beyond storage classes
+
+??? info "S3 Replication Time Control (RTC)?"
+    **99.99% of objects replicated within 15 minutes**, with an SLA and replication metrics.
+
+??? warning "You enable S3 replication on a bucket. Are the existing objects replicated?"
+    **No**, only new objects. For existing ones → **S3 Batch Replication**.
+
+??? tip "Many teams and apps share one bucket with different permissions, and the bucket policy is becoming too large. What do you use?"
+    **S3 Access Points**: one access point per app or team, each with its own policy.
+
+??? tip "Clients in several Regions must reach S3 through one global endpoint that routes to the closest bucket. What do you use?"
+    **S3 Multi-Region Access Points.**
+
+??? tip "Run the same action (copy, tag, restore from Glacier, invoke Lambda) on billions of existing S3 objects. What do you use?"
+    **S3 Batch Operations**, driven by an **S3 Inventory** report.
+
+??? tip "Users must upload files directly to S3 without AWS credentials of their own. How?"
+    **Presigned URLs** generated by the backend.
+
+??? info "S3 Object Lock: governance vs compliance mode?"
+    **Governance**: users with special permission can delete or shorten retention. **Compliance**: **nobody**, not even root, until retention ends. **Legal hold**: no end date. Requires **versioning**.
+
+## Cost optimization
+
+??? info "Compute Savings Plans vs EC2 Instance Savings Plans?"
+    **Compute SP**: any instance family, size, Region, OS, plus **Fargate and Lambda** (up to ~66%). **EC2 Instance SP**: one family in one Region (up to ~72%).
+
+??? info "Standard vs Convertible Reserved Instances?"
+    **Standard**: biggest discount, can't change instance family, can be sold on the RI Marketplace. **Convertible**: smaller discount, can be **exchanged** for another family, OS or tenancy.
+
+??? tip "Automatically stop EC2 / RDS instances or apply a restrictive SCP when a budget is exceeded. What do you use?"
+    **AWS Budgets actions.**
+
+??? tip "Get right-sizing recommendations for EC2, EBS, Lambda and ECS on Fargate based on actual utilization. Which service?"
+    **AWS Compute Optimizer.**
+
+??? tip "Finance needs the most detailed billing data, queryable with Athena or QuickSight. What do you set up?"
+    **Cost and Usage Report** (CUR 2.0, via **Data Exports**) to S3.
+
+??? warning "You add a cost allocation tag to resources. Does it appear in Cost Explorer right away, including past costs?"
+    **No.** It must be **activated** in the Billing console (management account), and only applies **from activation onward**.
+
+??? tip "A launch next week needs guaranteed EC2 capacity in a specific AZ, without a 1-year commitment. What do you buy?"
+    An **On-Demand Capacity Reservation** (combine with Savings Plans for the discount).
+
+## Operations and deployment
+
+??? tip "Admins need shell access to EC2 instances without SSH keys, bastion hosts or an open port 22, with every session logged. What do you use?"
+    **Systems Manager Session Manager.**
+
+??? tip "Patch a fleet of EC2 and on-prem servers on a schedule. What do you use?"
+    **Systems Manager Patch Manager** + **Maintenance Windows**.
+
+??? warning "A CloudFormation stack was deleted and the RDS database with it. How do you prevent this?"
+    **`DeletionPolicy: Snapshot`** (or `Retain`) on the database, plus **termination protection** on the stack.
+
+??? tip "Detect manual changes made to resources managed by CloudFormation. What do you use?"
+    **Drift detection.**
+
+??? tip "See which resources a CloudFormation update will modify or replace before running it. What do you use?"
+    **Change sets.**
+
+??? info "Which EC2 metrics need the CloudWatch agent?"
+    **Memory** and **disk space** usage (OS-level), and custom log files. CPU, network and disk I/O are available by default.
+
+??? tip "Trace requests across microservices to find where the latency comes from. Which service?"
+    **AWS X-Ray** (distributed tracing, service map).
+
+??? tip "Stream CloudWatch Logs from every account into a central logging account in near real time. How?"
+    **Subscription filters** → Kinesis Data Streams or Firehose in the central account (cross-account destination).
+
+## Analytics and end-user computing
+
+??? tip "Data lake on S3: grant column- and row-level permissions for Athena, Redshift Spectrum and EMR in one place. Which service?"
+    **AWS Lake Formation.**
+
+??? tip "Serverless ETL plus a central catalog of the data lake's schemas. Which service?"
+    **AWS Glue** (crawlers, Data Catalog, ETL jobs).
+
+??? tip "Full-text search and log analytics with dashboards. Which service?"
+    **Amazon OpenSearch Service.**
+
+??? tip "Business users need interactive BI dashboards, paid per user. Which service?"
+    **Amazon QuickSight.**
+
+??? tip "Run Spark or Hadoop jobs with control over the cluster, using Spot Instances for task nodes. Which service?"
+    **Amazon EMR.**
+
+??? tip "Remote employees need full virtual desktops / one application streamed to a browser. Which service for each?"
+    **Amazon WorkSpaces** / **Amazon AppStream 2.0**.

@@ -8,6 +8,26 @@
   user-select: none;
 }
 
+.fc-decks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+.fc-deck-btn { font-weight: 500; }
+.fc-deck-size {
+  margin-left: 0.25rem;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+.fc-deck-btn.fc-active {
+  background: var(--md-accent-fg-color);
+  border-color: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+  font-weight: 700;
+}
+.fc-deck-btn.fc-active:hover:not(:disabled) { color: var(--md-accent-bg-color); }
+
 .fc-bar {
   display: flex;
   align-items: center;
@@ -139,10 +159,20 @@
   .fc-back { font-size: 0.95rem; }
   .fc-btn { padding: 0.85rem 0.4rem; font-size: 0.85rem; }
   .fc-label { display: none; }
+  .fc-decks {
+    display: grid;
+    grid-template-columns: 0.6fr 1fr 1fr;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .fc-deck-btn { padding: 0.45rem 0.2rem; font-size: 0.72rem; }
+  .fc-bar { margin-bottom: 0.5rem; }
+  .fc-bar .fc-shuffle { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
 }
 
 /* Touch devices: bigger hit areas, no hover effect */
 @media (pointer: coarse) {
   .fc-btn { min-height: 2.9rem; }
+  .fc-deck-btn, .fc-bar .fc-shuffle { min-height: 2.3rem; }
   .fc-card:hover { box-shadow: var(--md-shadow-z2); }
 }
