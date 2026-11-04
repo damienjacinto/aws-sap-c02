@@ -436,8 +436,8 @@ HOW TO EDIT
 ??? warning "Does a FilterExpression save RCU?"
     **No.** You pay for every item read. Use a key or GSI and Query.
 
-??? warning "Throttling while total capacity is fine?"
-    **Hot partition.** Fix the key design, or DAX for reads.
+??? warning "A DynamoDB table is throttled although its total provisioned RCU/WCU is far from used. Why, and what's the fix?"
+    **Hot partition**: most requests hit the same partition key, and one partition is capped at 3,000 RCU / 1,000 WCU. Spread the traffic with a better key design (e.g. add a random suffix), or cache hot reads with **DAX**.
 
 ??? info "DynamoDB per-partition limits?"
     **3,000 RCU** and **1,000 WCU**.
