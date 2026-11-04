@@ -447,19 +447,19 @@ HOW TO EDIT
 
 ## [The 7 Rs](decisions/migration/seven-rs.md)
 
-??? tip "Minimal code changes AND reduce operational overhead?"
+??? tip "Which of the 7 Rs: minimal code changes AND reduce operational overhead?"
     **Replatform** (e.g. DB → RDS).
 
-??? tip "Keep VMware tools and skills?"
+??? tip "Which of the 7 Rs: keep VMware tools and skills?"
     **Relocate** → VMware Cloud on AWS.
 
-??? tip "Data center lease ends, as fast as possible?"
+??? tip "Which of the 7 Rs: data center lease ends, migrate as fast as possible?"
     **Rehost** with **MGN**.
 
 ??? warning "SCT for Oracle on-prem → RDS for Oracle?"
     Same engine → **DMS only**. SCT is for a **different** engine.
 
-??? info "Repurchase means?"
+??? info "7 Rs: what does repurchase mean?"
     Move to a **SaaS** product; migrate the data, retire the app.
 
 ## [Redshift](decisions/analytics/redshift.md)
