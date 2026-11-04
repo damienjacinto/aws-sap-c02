@@ -90,6 +90,7 @@ nav:
           - "KMS key types": decisions/security/kms-key-types.md
           - "Secrets Manager vs Parameter Store": decisions/security/secrets-storage.md
           - "CloudTrail: react, alert or keep the logs?": decisions/security/cloudtrail.md
+          - "Security services: GuardDuty, Inspector, Security Hub…": decisions/security/security-services.md
       - Compute:
           - "ASG scaling policies": decisions/compute/asg-scaling-policies.md
           - "Spot fleets": decisions/compute/spot-fleets.md

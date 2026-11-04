@@ -24,6 +24,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [KMS key types: AWS owned, AWS managed or customer managed?](security/kms-key-types.md) | Day 9 (Tue 6 Oct) |
 | [Secrets Manager vs Parameter Store (Standard or Advanced)?](security/secrets-storage.md) | Day 9 (Tue 6 Oct) |
 | [CloudTrail: react, alert or keep the logs?](security/cloudtrail.md) | Day 10 (Wed 7 Oct) |
+| [Security services: GuardDuty, Inspector, Macie, Security Hub… which one?](security/security-services.md) | Day 10 (Wed 7 Oct) |
 
 ## Compute
 

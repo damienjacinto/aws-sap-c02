@@ -525,7 +525,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 
 **🌳 Decision trees**
 
-- Detective controls: GuardDuty vs Inspector vs Macie vs Security Hub vs Detective vs Config vs CloudTrail
+- [Security services: GuardDuty, Inspector, Macie, Security Hub… which one?](decisions/security/security-services.md)
 - S3 access control: bucket policy, ACLs, access points, Block Public Access, Object Ownership
 - [CloudTrail: react, alert or keep the logs?](decisions/security/cloudtrail.md)
 

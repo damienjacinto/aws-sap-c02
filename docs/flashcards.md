@@ -145,6 +145,56 @@ HOW TO EDIT
 ??? info "CloudTrail Event history keeps what, for how long?"
     **Management events, 90 days**, free, no trail needed.
 
+## [Security services: GuardDuty, Inspector, Security Hub…](decisions/security/security-services.md)
+
+??? tip "Detect threats (crypto-mining, compromised credentials) from CloudTrail, VPC Flow Logs and DNS logs, with no agent to install. Which service?"
+    **Amazon GuardDuty.**
+
+??? tip "Find buckets containing personal data (PII) across all S3 buckets of the organization. Which service?"
+    **Amazon Macie.**
+
+??? tip "Continuously scan EC2 instances, ECR container images and Lambda functions for software vulnerabilities. Which service?"
+    **Amazon Inspector.**
+
+??? tip "Aggregate security findings from all accounts and check them against CIS and AWS Foundational Security Best Practices. Which service?"
+    **AWS Security Hub.**
+
+??? tip "Investigate the root cause of a GuardDuty finding with a graph of related activity. Which service?"
+    **Amazon Detective.**
+
+??? tip "Centrally enforce AWS WAF rules, Shield Advanced, security groups and Network Firewall policies across all accounts, including new ones. Which service?"
+    **AWS Firewall Manager** (requires AWS Organizations and AWS Config).
+
+??? info "AWS Shield Standard vs Shield Advanced?"
+    **Standard**: free, automatic, layer 3/4 protection. **Advanced**: paid, **Shield Response Team (SRT)**, **cost protection** for scaling during an attack, layer 7 protection with WAF, health-based detection.
+
+??? tip "Block SQL injection and rate-limit requests per IP in front of CloudFront, an ALB or API Gateway. Which service?"
+    **AWS WAF**: managed rule groups + a **rate-based rule**.
+
+??? tip "All VPC egress traffic needs managed stateful inspection and domain-name filtering. Which service?"
+    **AWS Network Firewall**, usually in a central inspection VPC behind a Transit Gateway.
+
+??? tip "Continuously check that resources stay compliant (e.g. no public buckets, encrypted volumes) and fix them automatically. Which service?"
+    **AWS Config rules** with **automatic remediation** (SSM Automation documents). Package rules for the org with **conformance packs**.
+
+??? warning "Security Hub is enabled in every account but shows almost no control results. What's missing?"
+    **AWS Config.** Most Security Hub controls run as Config rules: Config must be recording in each account and Region.
+
+??? warning "GuardDuty: do you need to enable VPC Flow Logs and a CloudTrail trail first?"
+    **No.** GuardDuty reads CloudTrail management events, Flow Logs and DNS logs from its own independent stream as soon as it's enabled.
+
+??? warning "Instances use their own DNS servers instead of the Amazon-provided resolver. What does GuardDuty miss?"
+    **DNS-based findings**: GuardDuty only sees queries that go through the Route 53 Resolver.
+
+??? tip "Files uploaded by users to S3 must be scanned for malware before processing. Which service?"
+    **GuardDuty Malware Protection for S3.**
+
+??? tip "A healthcare company needs AWS's SOC 2 report and a signed HIPAA BAA with AWS. Which service?"
+    **AWS Artifact.** (Evidence about *your own* controls → **Audit Manager**.)
+
+??? warning "GuardDuty and Security Hub enabled only in the Regions the company uses. Problem?"
+    They're **Regional**: attackers use Regions you don't watch. Enable in **all Regions**, with a delegated admin and auto-enable.
+
 ## [Auto Scaling groups: which scaling policy?](decisions/compute/asg-scaling-policies.md)
 
 ??? tip "Default scaling policy, least overhead?"
@@ -550,37 +600,7 @@ HOW TO EDIT
 ??? tip "Find every resource (bucket, role, KMS key…) shared with a principal outside the organization. Which service?"
     **IAM Access Analyzer** (external access findings). It also validates policies and generates least-privilege policies from CloudTrail activity.
 
-## Security services
-
-??? tip "Detect threats (crypto-mining, compromised credentials) from CloudTrail, VPC Flow Logs and DNS logs, with no agent to install. Which service?"
-    **Amazon GuardDuty.**
-
-??? tip "Find buckets containing personal data (PII) across all S3 buckets of the organization. Which service?"
-    **Amazon Macie.**
-
-??? tip "Continuously scan EC2 instances, ECR container images and Lambda functions for software vulnerabilities. Which service?"
-    **Amazon Inspector.**
-
-??? tip "Aggregate security findings from all accounts and check them against CIS and AWS Foundational Security Best Practices. Which service?"
-    **AWS Security Hub.**
-
-??? tip "Investigate the root cause of a GuardDuty finding with a graph of related activity. Which service?"
-    **Amazon Detective.**
-
-??? tip "Centrally enforce AWS WAF rules, Shield Advanced, security groups and Network Firewall policies across all accounts, including new ones. Which service?"
-    **AWS Firewall Manager** (requires AWS Organizations and AWS Config).
-
-??? info "AWS Shield Standard vs Shield Advanced?"
-    **Standard**: free, automatic, layer 3/4 protection. **Advanced**: paid, **Shield Response Team (SRT)**, **cost protection** for scaling during an attack, layer 7 protection with WAF, health-based detection.
-
-??? tip "Block SQL injection and rate-limit requests per IP in front of CloudFront, an ALB or API Gateway. Which service?"
-    **AWS WAF**: managed rule groups + a **rate-based rule**.
-
-??? tip "All VPC egress traffic needs managed stateful inspection and domain-name filtering. Which service?"
-    **AWS Network Firewall**, usually in a central inspection VPC behind a Transit Gateway.
-
-??? tip "Continuously check that resources stay compliant (e.g. no public buckets, encrypted volumes) and fix them automatically. Which service?"
-    **AWS Config rules** with **automatic remediation** (SSM Automation documents). Package rules for the org with **conformance packs**.
+## Security extras
 
 ??? info "ACM certificate for a CloudFront distribution: in which Region must it be? And for an ALB?"
     **CloudFront: us-east-1** (N. Virginia). **ALB: the ALB's own Region.**
