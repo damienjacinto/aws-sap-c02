@@ -116,7 +116,7 @@ HOW TO EDIT
 ??? info "Max value size: Standard, Advanced, Secrets Manager?"
     **4 KB · 8 KB · 64 KB.**
 
-??? info "Share with another account?"
+??? info "Parameter Store or Secrets Manager: share with another account?"
     Parameter Store **Advanced** via **RAM**. Secrets Manager: **resource policy + customer managed key**.
 
 ??? info "Same secret available in another Region for DR?"
@@ -139,7 +139,7 @@ HOW TO EDIT
 ??? info "Detect unusual API activity without a threshold?"
     **CloudTrail Insights.**
 
-??? info "Event history keeps what, for how long?"
+??? info "CloudTrail Event history keeps what, for how long?"
     **Management events, 90 days**, free, no trail needed.
 
 ## [Auto Scaling groups: which scaling policy?](decisions/compute/asg-scaling-policies.md)
@@ -190,7 +190,7 @@ HOW TO EDIT
 ??? warning "Geolocation records without a default record?"
     Users matching no location get **no answer**.
 
-??? info "Health check a private resource?"
+??? info "Route 53: health check a private resource?"
     Health check based on a **CloudWatch alarm**.
 
 ??? warning "CNAME at the zone apex?"
@@ -199,7 +199,7 @@ HOW TO EDIT
 ??? tip "Shift traffic by growing a Region's area?"
     **Geoproximity** with a positive **bias**.
 
-??? info "Multivalue answer returns?"
+??? info "Route 53 multivalue answer returns?"
     Up to **8 healthy** records, random. Not a load balancer.
 
 ??? tip "Near-instant Regional failover, no DNS caching?"
@@ -259,13 +259,13 @@ HOW TO EDIT
 ??? info "Can VPCs talk to each other through a DX gateway?"
     **No.** Use a **Transit Gateway**.
 
-??? tip "Maximum resiliency?"
+??? tip "Direct Connect: maximum resiliency?"
     **2 DX locations × 2 connections** on separate devices. Cheap option: DX + **VPN backup**.
 
-??? warning "LAG for resilience?"
+??? warning "Direct Connect LAG for resilience?"
     A LAG is in **one location**: no protection against losing it.
 
-??? info "How many VIFs on a hosted connection?"
+??? info "How many VIFs on a hosted Direct Connect connection?"
     **One.**
 
 ??? warning "BGP session goes down after adding on-prem routes?"
@@ -293,13 +293,13 @@ HOW TO EDIT
 
 ## [EFS performance and storage](decisions/storage/efs-performance-storage.md)
 
-??? info "Change EFS performance mode?"
+??? info "Change the performance mode of an existing EFS file system?"
     **Impossible.** New file system + DataSync.
 
 ??? tip "Small EFS is fast for hours, then throughput collapses?"
     **Burst credits** exhausted. Switch to **Elastic** (or Provisioned).
 
-??? tip "Spiky or unknown throughput?"
+??? tip "EFS with spiky or unknown throughput?"
     **Elastic** throughput.
 
 ??? info "EFS Archive storage class requires?"
@@ -328,7 +328,7 @@ HOW TO EDIT
 ??? warning "Lifecycle rule Glacier → Standard?"
     Impossible. **Restore**, then copy over itself.
 
-??? tip "Invisible storage cost from failed uploads?"
+??? tip "S3: invisible storage cost from failed multipart uploads?"
     Lifecycle **AbortIncompleteMultipartUpload**.
 
 ## [FSx](decisions/storage/fsx.md)
@@ -442,7 +442,7 @@ HOW TO EDIT
 ??? warning "Throttling while total capacity is fine?"
     **Hot partition.** Fix the key design, or DAX for reads.
 
-??? info "Per-partition limits?"
+??? info "DynamoDB per-partition limits?"
     **3,000 RCU** and **1,000 WCU**.
 
 ## [The 7 Rs](decisions/migration/seven-rs.md)
@@ -476,7 +476,7 @@ HOW TO EDIT
 ??? tip "Near-real-time analytics from Aurora with no pipeline?"
     **Zero-ETL integration.**
 
-??? info "Make `COPY` / `UNLOAD` traffic go through the VPC?"
+??? info "Redshift: make `COPY` / `UNLOAD` traffic go through the VPC?"
     **Enhanced VPC Routing.**
 
 ??? warning "Analysts query S3 logs a few times a month: Redshift?"
