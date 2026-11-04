@@ -112,8 +112,8 @@ nav:
           - "Redshift": decisions/analytics/redshift.md
       - Machine learning:
           - "AI services": decisions/ml/ai-services.md
+  - Flashcards: flashcards.md
   - Exam toolkit:
       - Keywords → answers: keywords.md
       - Mistakes log: mistakes.md
-      - Flashcards: flashcards.md
       - Tags: tags.md
