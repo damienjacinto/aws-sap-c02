@@ -9,7 +9,7 @@ tags:
 
 **The question:** a principal in account A needs to use something in account B. Which mechanism: assume a role, a resource-based policy, a RAM share, or IAM Identity Center?
 
-**Trigger keywords:** *"another account"*, *"third-party vendor / SaaS / auditor"*, *"all accounts in the organization"*, *"central security / logging / shared services account"*, *"without long-term credentials"*, *"confused deputy"*.
+**Trigger keywords:** *"another account"*, *"third-party vendor / SaaS / auditor"*, *"all accounts in the organization"*, *"central security / logging / shared services account"*, *"without long-term credentials"*, *"confused deputy"*, *"bucket shared by several accounts"*, *"ACLs disabled / re-enabled"*, *"Object Ownership"*.
 
 ## Fundamentals
 
@@ -31,6 +31,23 @@ tags:
 | `AssumeRoleWithWebIdentity` | User signs in to a **web IdP** (Google, Facebook, Amazon Cognito…), gets an **OIDC token**, and trades it with STS for role credentials |
 | `GetSessionToken` | An **MFA-enabled IAM user** submits the code from their MFA device to get temporary credentials |
 | `GetFederationToken` | Gets temporary credentials for a **federated user** |
+
+### S3 Object Ownership
+
+A bucket-level setting that decides **who owns uploaded objects** and **whether ACLs count**.
+
+| Setting | ACLs | Owner of new objects | Uploads accepted |
+|---|---|---|---|
+| **Bucket owner enforced** (default for new buckets since 2023) | ❌ disabled, ignored for access | **Bucket owner**, always (also applies to existing objects) | No ACL or `bucket-owner-full-control` only. Other ACLs → `400 AccessControlListNotSupported` |
+| **Bucket owner preferred** | ✅ | Bucket owner **if** the upload uses `bucket-owner-full-control`, otherwise the writer | All |
+| **Object writer** (old default) | ✅ | The **uploading account** | All |
+
+What happens when you switch:
+
+- **Disable ACLs (→ enforced):** ACLs aren't deleted, only **ignored**. Access now comes only from policies (IAM, bucket policy, VPC endpoint policy, SCP/RCP). Before switching, **migrate any ACL grants to the bucket policy**.
+- **Re-enable ACLs (→ writer or preferred):**
+    - Objects uploaded **while enforced** stay **owned by the bucket owner**. They don't go back to the uploader.
+    - Objects uploaded **before** go back to their original owners, and their **old ACLs are restored** (unless you migrated them to policies). The bucket owner loses control of those again, and a bucket policy can't grant access to objects it doesn't own.
 
 ## Decision tree
 
@@ -77,8 +94,17 @@ flowchart TD
 !!! warning "KMS: AWS managed keys can't be shared cross-account"
     You can't edit the key policy of an AWS managed key (`aws/s3`, `aws/ebs`…). To let another account decrypt, re-encrypt with a **customer managed key** and grant access in **both** its key policy and the caller's IAM policy. This is a very common exam scenario (e.g. sharing encrypted snapshots or AMIs).
 
-!!! warning "S3 object ownership"
-    With ACLs enabled, objects uploaded by account A into B's bucket were owned by A, and B could not read them. With **Bucket owner enforced** (ACLs disabled, the default for new buckets), the bucket owner owns everything. If a scenario says *"the bucket owner can't access uploaded objects"*, think object ownership.
+!!! warning "S3: the bucket owner can't read uploaded objects"
+    With ACLs enabled (Object writer), objects uploaded by account A into B's bucket are owned by A, and B's bucket policy doesn't apply to them. Fix: **Bucket owner enforced**. If ACLs must stay on, use **Bucket owner preferred** plus a bucket policy that **requires** the `bucket-owner-full-control` ACL on `PutObject`.
+
+!!! warning "S3: re-enabling ACLs doesn't undo ownership"
+    Objects written while Bucket owner enforced was on **stay owned by the bucket owner** after ACLs come back. Only the objects that existed before go back to their uploaders, with their **old ACLs restored**. Ownership isn't a switch you can flip back and forth on existing objects.
+
+!!! warning "S3: disabling ACLs deletes them"
+    No. They're kept but **ignored**, and come back if you re-enable ACLs. Anything that relied on an ACL grant (e.g. a log-delivery or cross-account reader) **loses access** the moment you disable them, unless you moved the grant into the bucket policy first.
+
+!!! warning "S3: uploads fail after disabling ACLs"
+    Clients that send an ACL other than `bucket-owner-full-control` (e.g. `public-read`, explicit grants) get `AccessControlListNotSupported`. Fix the clients to send no ACL; grant access in the bucket policy.
 
 !!! warning "Role chaining caps the session at 1 hour"
     Assuming a role from a role session limits the session to 1 hour, whatever the role's max session duration.
@@ -103,7 +129,11 @@ flowchart TD
 ??? question "5. Account A shares an encrypted EBS snapshot with account B, but B can't create a volume from it. The snapshot is encrypted with the default `aws/ebs` key. Fix?"
     AWS managed keys can't be shared. **Copy the snapshot re-encrypted with a customer managed key**, grant B `kms:Decrypt`/`kms:CreateGrant` etc. in that key's policy, share the new snapshot, and give B's principals matching IAM permissions.
 
+??? question "6. Three teams in separate accounts upload to a shared bucket. ACLs are disabled for a week (Bucket owner enforced), then re-enabled (Object writer). Who owns the files from that week, and the files from before?"
+    Files uploaded **during** the enforced week stay **owned by the bucket owner**. Files uploaded **before** are owned again by the uploading teams, with their **old ACLs restored**. For the future: keep ACLs disabled and grant the teams access with the **bucket policy**; migrate ACL grants to the policy before disabling ACLs.
+
 ## Related
 
 - [Will this request be allowed?](policy-evaluation.md)
+- AWS docs: [S3 Object Ownership and disabling ACLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html)
 - AWS docs: [The confused deputy problem](https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html)
