@@ -838,6 +838,7 @@ Re-read this week's trees, redo every mistake logged this week, finish any lab l
 - S3 data protection: versioning, replication, Object Lock, Backup
 - [Backup: DLM vs AWS Backup vs native backups](decisions/storage/backup-strategy.md)
 - [EFS: performance mode, throughput mode and storage class](decisions/storage/efs-performance-storage.md)
+- [FSx: which flavor, which deployment, and what not to touch?](decisions/storage/fsx.md)
 
 **📖 Read**
 

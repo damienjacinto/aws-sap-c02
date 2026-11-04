@@ -47,6 +47,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Backup: DLM vs AWS Backup vs native](storage/backup-strategy.md) | Day 16 (Wed 14 Oct) |
 | [EFS: performance mode, throughput mode and storage class](storage/efs-performance-storage.md) | Day 16 (Wed 14 Oct) |
 | [S3: which storage class and lifecycle?](storage/s3-storage-classes.md) | Day 16 (Wed 14 Oct) |
+| [FSx: which flavor, which deployment, and what not to touch?](storage/fsx.md) | Day 16 (Wed 14 Oct) |
 
 ## Databases
 
