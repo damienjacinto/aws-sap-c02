@@ -470,8 +470,8 @@ HOW TO EDIT
 ??? tip "Share live data with another account, no copy?"
     **Data sharing** (RA3 / Serverless).
 
-??? tip "Near-real-time analytics from Aurora with no pipeline?"
-    **Zero-ETL integration.**
+??? tip "Analysts need Aurora's transactional data in Redshift within seconds, without building or running an ETL pipeline (no Glue, no DMS). What do you use?"
+    **Aurora zero-ETL integration with Redshift.** Aurora replicates changes to Redshift automatically, near real time, nothing to manage. Also works from RDS for MySQL and DynamoDB.
 
 ??? info "Redshift: make `COPY` / `UNLOAD` traffic go through the VPC?"
     **Enhanced VPC Routing.**
