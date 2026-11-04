@@ -177,7 +177,7 @@ HOW TO EDIT
     **2 minutes**, via **EventBridge** or instance metadata. A **rebalance recommendation** may come earlier.
 
 ??? warning "You cancel a Spot Instance request (or a Spot Fleet). What happens to the Spot Instances it already launched?"
-    **They keep running.** Canceling only stops new launches. Terminate the instances yourself (or cancel the fleet with the terminate option); otherwise a **persistent** request relaunches them.
+    **They keep running.** Canceling only stops new launches. Order matters: **cancel the request first, then terminate the instances** (a Spot Fleet can be canceled with its terminate option). Terminating first while a **persistent** request is still open makes it launch replacements.
 
 ??? tip "A service on Spot must always serve traffic?"
     ASG **mixed instances** with an **On-Demand base**.
