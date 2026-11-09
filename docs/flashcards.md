@@ -272,6 +272,23 @@ HOW TO EDIT
 ??? tip "An app runs in two Regions. Route 53 failover is too slow because clients cache DNS answers. Which service fails over between Regions almost instantly?"
     **AWS Global Accelerator.** Clients use 2 static anycast IPs that never change; Global Accelerator health-checks the endpoints and shifts traffic to the healthy Region in seconds, with no DNS TTL to wait for.
 
+## [Hybrid DNS](decisions/networking/hybrid-dns.md)
+
+??? tip "On-prem servers must resolve a private hosted zone over DX?"
+    **Resolver inbound endpoint**; on-prem DNS **conditionally forwards** the zone to its IPs.
+
+??? tip "VPCs in 30 accounts must resolve corp.example.com from on-prem DNS?"
+    One **outbound endpoint** + **forwarding rule** in the network account, rule **shared with RAM** (or a **Route 53 Profile**).
+
+??? warning "Point on-prem DNS at the VPC+2 resolver address?"
+    **Not reachable** from outside the VPC. Use an inbound endpoint.
+
+??? info "Associate a private hosted zone with a VPC in another account?"
+    Owner: **create-vpc-association-authorization**. VPC account: **associate-vpc-with-hosted-zone**. CLI / API only.
+
+??? tip "Block DNS lookups to malware domains from every VPC?"
+    **Route 53 Resolver DNS Firewall**, rolled out with **Firewall Manager**.
+
 ## [Cross-zone load balancing](decisions/networking/elb-cross-zone.md)
 
 ??? info "Cross-zone default and cost: ALB, NLB, GWLB?"
