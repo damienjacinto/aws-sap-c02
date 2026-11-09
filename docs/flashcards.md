@@ -634,6 +634,23 @@ HOW TO EDIT
 ??? tip "Cut the DR cost of an Aurora Global Database but keep RPO about 1 s?"
     **Headless secondary**: storage only, no instances until failover.
 
+## [Caching](decisions/databases/caching.md)
+
+??? warning "DAX in front of RDS?"
+    **DynamoDB only.** RDS → ElastiCache or read replicas.
+
+??? tip "DynamoDB reads in microseconds, no rewrite of data access?"
+    **DAX** (API-compatible client).
+
+??? warning "Memcached for a highly available cache?"
+    No replication or failover. → **Valkey / Redis OSS Multi-AZ**.
+
+??? tip "Durable Redis-compatible primary database?"
+    **MemoryDB**, not ElastiCache.
+
+??? info "Which API Gateway type supports response caching?"
+    **REST APIs** only. TTL default 300 s, max 3,600 s.
+
 ## [Disaster recovery strategy](decisions/resilience/dr-strategy.md)
 
 ??? info "The 4 DR strategies, cheapest to fastest?"
