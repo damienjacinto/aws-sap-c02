@@ -76,6 +76,23 @@ HOW TO EDIT
 ??? warning "Upload with a `public-read` ACL to a bucket with ACLs disabled?"
     Fails: **400 `AccessControlListNotSupported`**. Only no ACL or `bucket-owner-full-control` is accepted.
 
+## [Multi-account foundations](decisions/identity/multi-account.md)
+
+??? tip "Set up a governed multi-account environment with log archive, audit account and guardrails, as fast as possible?"
+    **AWS Control Tower** landing zone.
+
+??? info "Control Tower controls: preventive, detective, proactive?"
+    **Preventive** = SCPs / RCPs. **Detective** = AWS Config rules. **Proactive** = CloudFormation hooks, blocking resources **before** they're created.
+
+??? tip "Every new account in an OU must automatically get the same IAM roles and Config rules?"
+    **StackSets with service-managed permissions and automatic deployment** to the OU (or CfCT / AFT with Control Tower).
+
+??? warning "IAM Identity Center for the users of a mobile app?"
+    **No.** Identity Center is for the **workforce**. App users → **Cognito**.
+
+??? tip "Developers may deploy only approved RDS configurations, without RDS permissions of their own?"
+    **Service Catalog** product with a **launch constraint** role.
+
 ## [KMS key types and envelope encryption](decisions/security/kms-key-types.md)
 
 ??? info "AWS owned vs AWS managed vs customer managed key?"
@@ -324,6 +341,40 @@ HOW TO EDIT
 ??? tip "Connectivity needed this week?"
     **Site-to-Site VPN** now. DX takes weeks.
 
+## [VPC to VPC connectivity](decisions/networking/vpc-connectivity.md)
+
+??? warning "VPC A peers with B, B peers with C. Can A reach C?"
+    **No.** Peering is **not transitive**, and there's no edge-to-edge routing (A can't use B's NAT, IGW, VPN or DX).
+
+??? tip "150 VPCs, on-prem over DX, prod must never reach dev?"
+    **Transit Gateway** with **separate route tables** per environment, shared with RAM.
+
+??? tip "A SaaS vendor exposes an API privately to hundreds of customers, many with overlapping CIDRs?"
+    **PrivateLink**: NLB + endpoint service; customers create interface endpoints.
+
+??? tip "Microservices across accounts call each other over HTTPS with IAM auth per service, no network plumbing?"
+    **VPC Lattice** service network.
+
+??? warning "Stateful firewalls behind a Transit Gateway drop return traffic. What's missing?"
+    **Appliance mode** on the inspection VPC attachment, so both directions of a flow use the same AZ.
+
+## [Edge: CloudFront or Global Accelerator](decisions/networking/cloudfront-global-accelerator.md)
+
+??? tip "UDP game servers in 3 Regions; players must reach the closest healthy one?"
+    **Global Accelerator.** CloudFront is HTTP(S) / WebSocket only.
+
+??? tip "B2B clients can only allow-list fixed IPs; the API runs behind ALBs in two Regions?"
+    **Global Accelerator**: 2 static anycast IPs, endpoints in both Regions.
+
+??? warning "Does Global Accelerator cache content?"
+    **No.** It optimizes the network path. Caching = **CloudFront**.
+
+??? info "Restrict an S3 origin to CloudFront only: OAI or OAC?"
+    **OAC** (Origin Access Control). OAI is legacy and doesn't support SSE-KMS.
+
+??? info "CloudFront Functions vs Lambda@Edge?"
+    **Functions**: sub-ms, viewer events only, header/URL rewrites. **Lambda@Edge**: heavier logic, network calls, origin events, body access.
+
 ## [Backup strategy](decisions/storage/backup-strategy.md)
 
 ??? warning "DLM to back up RDS or DynamoDB?"
@@ -495,6 +546,60 @@ HOW TO EDIT
 ??? info "DynamoDB per-partition limits?"
     **3,000 RCU** and **1,000 WCU**.
 
+## [Multi-Region databases](decisions/databases/multi-region-databases.md)
+
+??? tip "Users in 3 Regions must write with local latency and survive any Region loss?"
+    **DynamoDB global tables** (multi-active, last writer wins).
+
+??? tip "MySQL-compatible OLTP: RPO about 1 s, RTO under 1 min, reads in other Regions?"
+    **Aurora Global Database.**
+
+??? warning "Aurora Global Database for multi-Region writes?"
+    **One writer Region.** Secondaries are read-only; write forwarding just sends writes to the primary.
+
+??? warning "Promote an RDS cross-Region read replica, then fail back easily?"
+    Promotion is **one-way**: it becomes standalone. Fail back = create a new replica in the original Region.
+
+??? tip "Cut the DR cost of an Aurora Global Database but keep RPO about 1 s?"
+    **Headless secondary**: storage only, no instances until failover.
+
+## [Disaster recovery strategy](decisions/resilience/dr-strategy.md)
+
+??? info "The 4 DR strategies, cheapest to fastest?"
+    **Backup & restore** → **pilot light** → **warm standby** → **multi-site active/active**.
+
+??? warning "Pilot light vs warm standby?"
+    **Pilot light**: data replicated live, compute **off**, started at failover. **Warm standby**: full stack **running scaled-down**, just scale up.
+
+??? tip "200 on-prem servers need DR to AWS with RPO in seconds and little idle cost?"
+    **AWS Elastic Disaster Recovery** (continuous block replication, launch on demand).
+
+??? warning "Fail over by calling APIs in the impaired Region?"
+    Control planes may be down. Use **data-plane** mechanisms: Route 53 health checks, **ARC routing controls**, Global Accelerator.
+
+??? warning "Backup & restore plan with AMIs and snapshots left in the primary Region?"
+    They're **Regional**: copy them (and use multi-Region KMS keys) to the DR Region.
+
+## [Messaging: SQS, SNS, EventBridge, Kinesis, MQ](decisions/integration/messaging.md)
+
+??? warning "Several independent consumers must each process every message. One SQS queue?"
+    **No.** One message → one consumer. **SNS → one SQS queue per consumer**, EventBridge, or Kinesis.
+
+??? tip "Orders per customer must be processed in order and never twice?"
+    **SQS FIFO** with **message group ID = customer ID**.
+
+??? tip "50 MB/s clickstream, several consumers, reprocess the last 3 days?"
+    **Kinesis Data Streams** (retention ≥ 3 days), Firehose to S3 for the archive.
+
+??? tip "On-prem Java app uses ActiveMQ / JMS; move it with minimal code changes?"
+    **Amazon MQ.**
+
+??? info "SQS and SNS maximum message size today?"
+    **1 MiB** (was 256 KiB). Larger → Extended Client Library with the payload in S3.
+
+??? warning "SQS → Lambda: visibility timeout vs function timeout?"
+    Visibility timeout **≥ 6× the function timeout**, or messages reappear during processing.
+
 ## [The 7 Rs](decisions/migration/seven-rs.md)
 
 ??? tip "Which of the 7 Rs: minimal code changes AND reduce operational overhead?"
@@ -511,6 +616,23 @@ HOW TO EDIT
 
 ??? info "7 Rs: what does repurchase mean?"
     Move to a **SaaS** product; migrate the data, retire the app.
+
+## [Migration tools](decisions/migration/migration-tools.md)
+
+??? tip "CIO wants a TCO comparison for 800 VMs before any technical work?"
+    **Migration Evaluator.**
+
+??? tip "Which servers talk to each other, and on which ports?"
+    **Application Discovery Service** with the **Discovery Agent** (agentless gives inventory and performance only).
+
+??? tip "Rehost 300 VMware VMs with a short cutover window?"
+    **AWS Application Migration Service (MGN).**
+
+??? warning "Does DMS convert an Oracle schema to PostgreSQL?"
+    **No.** **DMS Schema Conversion / SCT** converts the schema; DMS moves the data (full load + CDC).
+
+??? warning "Order a Snowball Edge for a new migration project today?"
+    Closed to **new customers** since Nov 2025. Options: **DataSync**, **Data Transfer Terminal**, more bandwidth (DX).
 
 ## [Redshift](decisions/analytics/redshift.md)
 
@@ -554,6 +676,26 @@ HOW TO EDIT
 
 ??? info "Humans review low-confidence results?"
     **Amazon A2I.**
+
+## [IoT services](decisions/iot/iot-services.md)
+
+??? tip "Millions of sensors over MQTT, per-device authentication, least operations?"
+    **AWS IoT Core**, one **X.509 certificate per device**.
+
+??? info "Device Shadow: what is it for?"
+    JSON state per device, **desired** vs **reported**. Apps set desired while the device is **offline**; it syncs the delta on reconnect.
+
+??? tip "Local decisions in milliseconds and buffering while the WAN is down?"
+    **IoT Greengrass V2** on a gateway (components, stream manager).
+
+??? tip "OPC UA equipment, asset hierarchies, OEE metrics?"
+    **AWS IoT SiteWise** with **SiteWise Edge**.
+
+??? warning "IoT Analytics or IoT Events as today's answer?"
+    Both **retired** (Dec 2025 / May 2026). Use **Rules → Firehose → S3 → Athena** and **Lambda / CloudWatch alarms**.
+
+??? tip "Detect a device suddenly publishing 100× its normal rate?"
+    **IoT Device Defender Detect.**
 
 <div class="fc-deck" data-name="Exam extras"></div>
 
