@@ -97,6 +97,7 @@ nav:
       - Compute:
           - "ASG scaling policies": decisions/compute/asg-scaling-policies.md
           - "Spot fleets": decisions/compute/spot-fleets.md
+          - "Lambda, ECS, EKS, Fargate or Batch": decisions/compute/containers-serverless.md
       - Networking:
           - "Route 53 routing policies": decisions/networking/route53-routing-policies.md
           - "Hybrid DNS: Resolver endpoints & rules": decisions/networking/hybrid-dns.md

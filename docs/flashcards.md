@@ -289,6 +289,23 @@ HOW TO EDIT
 ??? tip "A service on Spot must always serve traffic?"
     ASG **mixed instances** with an **On-Demand base**.
 
+## [Compute platform: Lambda, ECS, EKS, Fargate, Batch](decisions/compute/containers-serverless.md)
+
+??? warning "Lambda for a 40-minute job?"
+    **15 min max.** → Fargate task, **AWS Batch**, or split with Step Functions.
+
+??? warning "EKS for the least operational overhead?"
+    Only if **Kubernetes is a requirement**. Otherwise **ECS on Fargate**.
+
+??? warning "Fargate with GPUs or daemon containers?"
+    Not supported. → **ECS on EC2 / Managed Instances**, or EKS node groups.
+
+??? tip "Thousands of 2-hour transcoding jobs a week, cost matters?"
+    **AWS Batch** on **Spot**.
+
+??? info "App Runner for a new simple container web app?"
+    Closed to new customers since **Apr 2026**. → **ECS Express Mode** / Fargate.
+
 ## [Route 53 routing policies](decisions/networking/route53-routing-policies.md)
 
 ??? warning "Geolocation records without a default record?"
