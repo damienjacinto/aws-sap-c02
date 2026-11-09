@@ -96,6 +96,12 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [The 7 Rs: which migration strategy?](migration/seven-rs.md) | Day 23 (Thu 22 Oct) |
 | [Migration tools: Discovery, MGN, DMS/SCT, DataSync or offline transfer?](migration/migration-tools.md) | Day 23 (Thu 22 Oct) |
 
+## Cost
+
+| Decision | Built on |
+|---|---|
+| [Cost optimization: which pricing model, and which tool finds the savings?](cost/cost-optimization.md) | Day 24 (Fri 23 Oct) |
+
 ## Analytics
 
 | Decision | Built on |

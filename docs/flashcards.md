@@ -756,6 +756,23 @@ HOW TO EDIT
 ??? warning "Order a Snowball Edge for a new migration project today?"
     Closed to **new customers** since Nov 2025. Options: **DataSync**, **Data Transfer Terminal**, more bandwidth (DX).
 
+## [Cost optimization](decisions/cost/cost-optimization.md)
+
+??? warning "Do Savings Plans reserve capacity?"
+    **No.** Capacity guarantee = **On-Demand Capacity Reservation** (or a zonal RI).
+
+??? tip "3-year discount for EC2, Fargate and Lambda, moving to Graviton and a new Region?"
+    **Compute Savings Plans.**
+
+??? info "Database Savings Plans: what and how much?"
+    1-year $/hour commitment across Aurora, RDS, DynamoDB, ElastiCache and more, up to **~35 %**, flexible across engines and Regions.
+
+??? warning "Budgets vs Cost Anomaly Detection?"
+    **Budgets**: thresholds you set, can act. **Anomaly Detection**: ML finds **unexpected** spend without a threshold.
+
+??? tip "Huge NAT gateway bill from private instances reading S3?"
+    **S3 gateway VPC endpoint** (free).
+
 ## [Redshift](decisions/analytics/redshift.md)
 
 ??? tip "Many concurrent users queue on Redshift?"

@@ -129,6 +129,8 @@ nav:
       - Migration:
           - "The 7 Rs": decisions/migration/seven-rs.md
           - "Migration tools": decisions/migration/migration-tools.md
+      - Cost:
+          - "Pricing models & cost tools": decisions/cost/cost-optimization.md
       - Analytics:
           - "Redshift": decisions/analytics/redshift.md
       - Machine learning:
