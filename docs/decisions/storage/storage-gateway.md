@@ -1,7 +1,7 @@
 ---
 tags:
   - "Domain 2: New Solutions"
-  - "Domain 4: Migration"
+  - "Domain 4: Migration and Modernization"
   - Storage Gateway
   - Storage
   - Hybrid
