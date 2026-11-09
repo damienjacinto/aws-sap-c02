@@ -41,6 +41,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Cross-zone load balancing](networking/elb-cross-zone.md) | Day 14 (Mon 12 Oct) |
 | [IPv6 with Elastic Load Balancing](networking/elb-ipv6.md) | Day 14 (Mon 12 Oct) |
 | [Direct Connect: which VIF, and how to make it resilient?](networking/direct-connect.md) | Day 6 (Fri 2 Oct) |
+| [VPC to VPC: peering, Transit Gateway, PrivateLink or VPC Lattice?](networking/vpc-connectivity.md) | Days 5–6 (1–2 Oct) |
 
 ## Storage
 
