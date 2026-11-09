@@ -119,6 +119,7 @@ nav:
           - "Messaging: SQS, SNS, EventBridge, Kinesis, MQ": decisions/integration/messaging.md
       - Migration:
           - "The 7 Rs": decisions/migration/seven-rs.md
+          - "Migration tools": decisions/migration/migration-tools.md
       - Analytics:
           - "Redshift": decisions/analytics/redshift.md
       - Machine learning:
