@@ -16,6 +16,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 |---|---|
 | [Will this request be allowed?](identity/policy-evaluation.md) | Day 1 |
 | [Cross-account access](identity/cross-account-access.md) | Day 1 |
+| [Multi-account foundations: Organizations, Control Tower, Identity Center, RAM, StackSets?](identity/multi-account.md) | Days 2–4 (28–30 Sep) |
 
 ## Security & monitoring
 
