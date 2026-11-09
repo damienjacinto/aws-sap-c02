@@ -83,6 +83,12 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Messaging: SQS, SNS, EventBridge, Kinesis or Amazon MQ?](integration/messaging.md) | Day 19 (Sun 18 Oct) |
 | [API Gateway: REST, HTTP or WebSocket API, and how to secure and throttle it?](integration/api-gateway.md) | Day 18 (Fri 16 Oct) |
 
+## Deployment
+
+| Decision | Built on |
+|---|---|
+| [Deployment strategies: rolling, blue/green, canary or linear, and with which tool?](deployment/deployment-strategies.md) | Day 21 (Tue 20 Oct) |
+
 ## Migration
 
 | Decision | Built on |

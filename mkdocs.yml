@@ -124,6 +124,8 @@ nav:
       - Application integration:
           - "Messaging: SQS, SNS, EventBridge, Kinesis, MQ": decisions/integration/messaging.md
           - "API Gateway: REST, HTTP or WebSocket": decisions/integration/api-gateway.md
+      - Deployment:
+          - "Deployment strategies & CloudFormation safety": decisions/deployment/deployment-strategies.md
       - Migration:
           - "The 7 Rs": decisions/migration/seven-rs.md
           - "Migration tools": decisions/migration/migration-tools.md

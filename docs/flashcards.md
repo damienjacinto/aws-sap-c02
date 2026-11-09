@@ -705,6 +705,23 @@ HOW TO EDIT
 ??? info "API Gateway default throttle and integration timeout?"
     **10,000 rps** (5,000 burst) per account and Region; **29 s** integration timeout by default.
 
+## [Deployment strategies](decisions/deployment/deployment-strategies.md)
+
+??? warning "Route 53 weighted records for an instant rollback?"
+    DNS is **cached for the TTL**. Use ALB weighted target groups, CodeDeploy or ECS built-in deployments.
+
+??? info "Does ECS still need CodeDeploy for blue/green or canary?"
+    **No.** Since 2025, ECS has **built-in** blue/green, linear and canary deployments (CodeDeploy still works).
+
+??? warning "Blue/green on Elastic Beanstalk: which deployment policy?"
+    None: it's **two environments + Swap environment URLs**. In-place safe option = **Immutable**.
+
+??? tip "A stack must not finish until the instance's user data succeeds?"
+    **CreationPolicy** + **cfn-signal**.
+
+??? tip "A stack update must never replace the production database?"
+    **Stack policy** denying Update:Replace, preview with a **change set**, **DeletionPolicy / UpdateReplacePolicy: Snapshot**.
+
 ## [The 7 Rs](decisions/migration/seven-rs.md)
 
 ??? tip "Which of the 7 Rs: minimal code changes AND reduce operational overhead?"
