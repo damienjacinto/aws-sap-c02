@@ -27,6 +27,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [Secrets Manager vs Parameter Store (Standard or Advanced)?](security/secrets-storage.md) | Day 9 (Tue 6 Oct) |
 | [CloudTrail: react, alert or keep the logs?](security/cloudtrail.md) | Day 10 (Wed 7 Oct) |
 | [Security services: GuardDuty, Inspector, Macie, Security Hub… which one?](security/security-services.md) | Day 10 (Wed 7 Oct) |
+| [Network protection: security groups, NACLs, WAF, Shield, Network Firewall or Firewall Manager?](security/network-protection.md) | Day 8 (Mon 5 Oct) |
 
 ## Compute
 

@@ -229,6 +229,26 @@ HOW TO EDIT
 ??? warning "GuardDuty and Security Hub enabled only in the Regions the company uses. Problem?"
     They're **Regional**: attackers use Regions you don't watch. Enable in **all Regions**, with a delegated admin and auto-enable.
 
+## [Network protection](decisions/security/network-protection.md)
+
+??? warning "Block one malicious IP with a security group?"
+    SGs **only allow**. Deny → **NACL**, or a **WAF IP set** for HTTP.
+
+??? warning "NACL to block a client behind CloudFront or an ALB?"
+    The subnet sees the **load balancer's / CloudFront's IPs**. Block at **WAF**.
+
+??? tip "SQL injection attempts and one IP flooding requests on a CloudFront site?"
+    **AWS WAF** on the distribution: managed SQLi rules + a **rate-based rule**.
+
+??? info "What does Shield Advanced add over Shield Standard?"
+    **Shield Response Team**, **cost protection**, automatic L7 mitigation with WAF, protection for GA, EIPs, Route 53, ELB, CloudFront.
+
+??? tip "Egress from all VPCs only to approved domains, with IDS signatures?"
+    **AWS Network Firewall** in a central inspection VPC behind the **TGW**.
+
+??? tip "Same WAF rules on every ALB in the org, including future ones?"
+    **Firewall Manager** (needs Organizations + Config).
+
 ## [Auto Scaling groups: which scaling policy?](decisions/compute/asg-scaling-policies.md)
 
 ??? tip "Default scaling policy, least overhead?"
