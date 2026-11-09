@@ -688,6 +688,23 @@ HOW TO EDIT
 ??? warning "SQS → Lambda: visibility timeout vs function timeout?"
     Visibility timeout **≥ 6× the function timeout**, or messages reappear during processing.
 
+## [API Gateway: REST, HTTP or WebSocket](decisions/integration/api-gateway.md)
+
+??? info "Features only REST APIs have?"
+    **Usage plans + API keys**, **caching**, **WAF**, **private** and edge-optimized endpoints, request validation, stage canary.
+
+??? tip "Validate Auth0 / Cognito JWTs at the lowest cost and latency?"
+    **HTTP API** with a **JWT authorizer**.
+
+??? warning "API keys as authentication?"
+    No. They identify clients for **usage plans**. Authenticate with IAM, Cognito, JWT or a Lambda authorizer.
+
+??? tip "API reachable only from inside the company's VPCs?"
+    **Private REST API** + **execute-api interface endpoint** + resource policy on `aws:SourceVpce`.
+
+??? info "API Gateway default throttle and integration timeout?"
+    **10,000 rps** (5,000 burst) per account and Region; **29 s** integration timeout by default.
+
 ## [The 7 Rs](decisions/migration/seven-rs.md)
 
 ??? tip "Which of the 7 Rs: minimal code changes AND reduce operational overhead?"

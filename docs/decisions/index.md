@@ -81,6 +81,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | Decision | Built on |
 |---|---|
 | [Messaging: SQS, SNS, EventBridge, Kinesis or Amazon MQ?](integration/messaging.md) | Day 19 (Sun 18 Oct) |
+| [API Gateway: REST, HTTP or WebSocket API, and how to secure and throttle it?](integration/api-gateway.md) | Day 18 (Fri 16 Oct) |
 
 ## Migration
 
