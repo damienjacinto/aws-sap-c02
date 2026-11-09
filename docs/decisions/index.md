@@ -96,4 +96,10 @@ Each page answers **one question the exam keeps asking**, in the same order:
 |---|---|
 | [AI services: which one does the job?](ml/ai-services.md) | Day 24 (Fri 23 Oct) |
 
+## IoT
+
+| Decision | Built on |
+|---|---|
+| [IoT: which service connects, processes and manages the devices?](iot/iot-services.md) | Day 24 (Fri 23 Oct) |
+
 *New pages are added as the [curriculum](../curriculum.md) progresses.*
