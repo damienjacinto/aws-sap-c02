@@ -793,6 +793,23 @@ HOW TO EDIT
 ??? warning "Analysts query S3 logs a few times a month: Redshift?"
     No → **Athena**.
 
+## [Data lake on S3](decisions/analytics/data-lake.md)
+
+??? tip "Cut Athena cost and time on 50 TB of CSV logs?"
+    Convert to **Parquet**, compress, **partition** by the filter columns.
+
+??? info "Glue ETL vs EMR?"
+    **Glue**: serverless Spark, no tuning. **EMR**: cluster control, custom frameworks, **Spot task nodes** (EMR Serverless in between).
+
+??? tip "Analysts may read a table except one column, via Athena and Redshift Spectrum?"
+    **Lake Formation** column-level permissions.
+
+??? tip "Salesforce data into S3 daily without code?"
+    **Amazon AppFlow.**
+
+??? warning "Firehose for per-record real-time processing?"
+    Firehose **buffers** and delivers. Real time → **Kinesis Data Streams** + Lambda / Flink.
+
 ## [AI services](decisions/ml/ai-services.md)
 
 ??? tip "Extract fields from scanned invoices?"

@@ -133,6 +133,7 @@ nav:
           - "Pricing models & cost tools": decisions/cost/cost-optimization.md
       - Analytics:
           - "Redshift": decisions/analytics/redshift.md
+          - "Data lake: Glue, Athena, EMR, Lake Formation": decisions/analytics/data-lake.md
       - Machine learning:
           - "AI services": decisions/ml/ai-services.md
       - IoT:

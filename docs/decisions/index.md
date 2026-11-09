@@ -107,6 +107,7 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | Decision | Built on |
 |---|---|
 | [Redshift: is it the right engine, and which feature fixes the problem?](analytics/redshift.md) | Day 20 (Mon 19 Oct) |
+| [Data lake on S3: Glue, Athena, EMR, Lake Formation, Kinesis or Redshift?](analytics/data-lake.md) | Day 20 (Mon 19 Oct) |
 
 ## Machine learning
 
