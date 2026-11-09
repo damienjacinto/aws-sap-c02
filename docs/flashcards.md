@@ -93,6 +93,23 @@ HOW TO EDIT
 ??? tip "Developers may deploy only approved RDS configurations, without RDS permissions of their own?"
     **Service Catalog** product with a **launch constraint** role.
 
+## [Federation and directories](decisions/identity/federation-directories.md)
+
+??? warning "A Cognito user pool gives app users AWS credentials?"
+    **No**, it issues JWTs. AWS credentials come from a **Cognito identity pool**.
+
+??? tip "GitHub Actions deploys with stored access keys. Remove them?"
+    **IAM OIDC identity provider** + role trusting the repo and branch (`AssumeRoleWithWebIdentity`).
+
+??? tip "On-prem servers use access keys stored on disk to call AWS?"
+    **IAM Roles Anywhere** with X.509 certificates.
+
+??? info "AD Connector vs AWS Managed Microsoft AD?"
+    **AD Connector**: proxy to on-prem AD, stores nothing, needs VPN/DX. **Managed AD**: real AD in AWS, **trusts**, works if the link drops.
+
+??? warning "Trust between Simple AD and on-prem AD?"
+    Not supported. **Managed Microsoft AD.**
+
 ## [KMS key types and envelope encryption](decisions/security/kms-key-types.md)
 
 ??? info "AWS owned vs AWS managed vs customer managed key?"
