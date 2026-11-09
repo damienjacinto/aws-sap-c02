@@ -61,6 +61,12 @@ Each page answers **one question the exam keeps asking**, in the same order:
 | [RDS auto scaling: what scales by itself?](databases/rds-auto-scaling.md) | Day 17 (Thu 15 Oct) |
 | [DynamoDB: how many RCU and WCU?](databases/dynamodb-capacity.md) | Day 17 (Thu 15 Oct) |
 
+## Resilience
+
+| Decision | Built on |
+|---|---|
+| [Disaster recovery: which strategy for this RTO and RPO?](resilience/dr-strategy.md) | Day 18 (Fri 16 Oct) |
+
 ## Migration
 
 | Decision | Built on |
