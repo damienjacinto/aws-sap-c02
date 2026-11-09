@@ -113,6 +113,7 @@ nav:
           - "RDS Proxy": decisions/databases/rds-proxy.md
           - "RDS auto scaling": decisions/databases/rds-auto-scaling.md
           - "DynamoDB RCU / WCU": decisions/databases/dynamodb-capacity.md
+          - "Multi-Region databases": decisions/databases/multi-region-databases.md
       - Resilience:
           - "Disaster recovery strategy": decisions/resilience/dr-strategy.md
       - Application integration:
