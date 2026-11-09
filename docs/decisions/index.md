@@ -70,6 +70,12 @@ Each page answers **one question the exam keeps asking**, in the same order:
 |---|---|
 | [Disaster recovery: which strategy for this RTO and RPO?](resilience/dr-strategy.md) | Day 18 (Fri 16 Oct) |
 
+## Application integration
+
+| Decision | Built on |
+|---|---|
+| [Messaging: SQS, SNS, EventBridge, Kinesis or Amazon MQ?](integration/messaging.md) | Day 19 (Sun 18 Oct) |
+
 ## Migration
 
 | Decision | Built on |
